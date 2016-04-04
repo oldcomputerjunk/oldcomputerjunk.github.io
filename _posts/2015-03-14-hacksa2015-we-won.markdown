@@ -1,0 +1,29 @@
+---
+author: admin1
+comments: false
+date: 2015-03-14 12:35:06+00:00
+layout: post
+slug: hacksa2015-we-won
+title: hacksa2015 - we won!
+wordpress_id: 649
+categories:
+- blog
+- realworld
+tags:
+- data
+- hackathon
+---
+
+The previous week we were informed that we were the [winners](https://www.facebook.com/hacksouthaustralia/posts/1406362049667701) of the first [hacksa](https://www.facebook.com/hacksouthaustralia) competition!
+
+This was really awesome, we had [put in a bit of work](http://blog.oldcomputerjunk.net/2015/hacksa2015/) that week and it validates my ideas about how to approach a hackathon I [blogged](http://blog.oldcomputerjunk.net/2014/unleashed-govhack-an-adelaide-adventure-in-open-data/) about previously . You can see our proof of concept web application at [http://phaze.space](http://phaze.space/1blog)
+
+I think what helped us over the line was that we had a working web application that actually 'did something', or a 'minimum viable product' in the parlance: we demonstrated the primary user experience ( generate musical playlists when you don't know what to choose ) along with various potential features illustrated by button placeholders.
+
+There was a cash prize, and some music, and headphones, and a membership in a co-working space which we donated to the runner-up because we all have day jobs and wouldn't be able to use it.  For me though the best prize was tickets to the [NetWorkPlay](https://www.net-work-play.com/) conference held in Adelaide last week.  This was a completely different scene, this was a media industry conference (mostly documentary film-makers, and a mix of other film industry and media) and I met some different and quite interesting people.
+
+One takeaway from NetWorkPlay as a software guy was research showing that most younger people directly use youtube as a search engine instead of google when searching for media. This was interesting, my first instinct (habit?)  is using google or other 'traditional' search engines even when searching for videos that ends up with me on YouTube anyway. A learned quite a few other interesting things, and more importantly had to move out of my comfort zone and had a good time interacting with people I would never have likely crossed paths with.
+
+So thanks to my team members (you know who you are) for an awesome effort, and I'm looking forward to govhack 2015!
+
+I'd also like to thank the competition organisers, including [madeinkatana.com](http://madeinkatana.com) , SA [Music Development Office](http://mdo.sa.gov.au), [Musitec](http://www.musitec.co) and [Flinders New Ventures Institute](http://nviflinders.com.au), and the sponsors for the generous prizes.

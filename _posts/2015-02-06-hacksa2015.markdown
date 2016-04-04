@@ -1,0 +1,47 @@
+---
+author: admin1
+comments: false
+date: 2015-02-06 13:13:10+00:00
+layout: post
+slug: hacksa2015
+title: hacksa2015
+wordpress_id: 629
+tags:
+- community
+- data
+- hackathon
+- opendata
+- personal
+---
+
+In the middle of last year I attended Unleashed/Govhack 2014, I blogged about it [here](http://blog.oldcomputerjunk.net/2014/unleashed-govhack-an-adelaide-adventure-in-open-data/).
+
+Barely over a week ago by pure chance I stumbled across another hackathon, this time being [hacksa](http://www.hacksa.com.au). This was an Adelaide only event that was designed to tie in with [Entrepreneurs Week](http://www.brandsouthaustralia.com.au/programs-and-awards/entrepreneurs-week) here. It seemed like an excellent opportunity to practice for the next GovHack (and a chance to meet some new people) so I entered a team! Also, I discovered that one of the people running the event was a friend of mine from uni over from Sydney for the event, so it was a good chance to catch up.
+
+Hacksa was also going to be a small event, being first time, held at short notice, in one city, and also more focused to a specific domain (music industry) compared to GovHack. So I figured that if I managed to put into practice some of what I think I learned at Unleashed in 2014 we might stand a chance of earning some conference tickets (one of the prizes is entry to a conference called [NetWorkPlay](https://www.net-work-play.com/)) or maybe if lucky enough cash!
+
+Having entered a team, I had to find some teammates. So I press-ganged Mr 13, and then convinced a friend from linux.conf.au who was in another team at Unleashed, and another friend of mine who knows a bit about business, to join in, and we set to work.
+
+
+### Spread Out in Time
+
+
+Unlike GovHack, hacksa released the API (well, some of them) the Friday before the event. So we had the weekend to work on it. Actually we only had the weekend because the hacksa event proper was strangely held on a Wednesday, and we all had work or school.  But this was OK, we only had to show up in the evening to finalise things and do the video interview. This was another difference (and I think improvement), we didn't have to shoot our own video.
+
+Actually we really only had Sunday, because of life and stuff, so I put in a late one on the Saturday evening pulling together a VPS and web infrastructure for our entry, along with libraries (I decided to use twitter bootstrap to get moving in  hurry, along with Python web.py)  I'd had two ideas, one for a visualusation/infographic and the other a web app, and learning from Unleashed I intentionally stopped thinking too hard at that point and went with the web app, which was to be a mash up based initially on the V-channel chart APIs. Ultimately I think going for a web app will prove to be a good idea, we'll see in due course.
+
+On the Sunday we congregated at a local library and polished off the prototype. Mr 13 put together a snazzy landing page for us using weebly, and a request page using launch rock. Its pretty handy being able to divvy out tasks and keep in involved and motivated!
+
+
+### Pizza!
+
+
+The hackathon event was held at a place called [St Pauls Creative Center](http://mdo.sa.gov.au/st-pauls/) in the CBD.  It was actually a pretty nice venue for this event. We got there about 6pm which gave us a couple more hours to refine Sundays efforts and then do the video interview. Of course we got pizza which was good too because Mr 13 was pretty hungry by then :-)
+
+Overall it felt good to actually pull something together that was essentially a working 'minimal viable product' (in the parlance), and we also had a good 'story' to tell, thanks to my friends.
+
+I'll probably blog more about the app itself and the API feeds a bit later.
+
+Even if we don't win anything, I think I'll finish it off and we'll go live as an experiment to see if anyone actually uses it and maybe make enough to pay for the VPS hosting for a few cups of coffee from google ads!
+
+

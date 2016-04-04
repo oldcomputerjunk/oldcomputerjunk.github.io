@@ -1,0 +1,19 @@
+---
+author: admin1
+comments: true
+date: 2011-12-09 12:46:25+00:00
+layout: post
+slug: im-going-to-lca2012
+title: I'm going to LCA2012
+wordpress_id: 26
+categories:
+- linux
+tags:
+- LCA2012
+- linux
+---
+
+I decided to go to [linux.conf.au](http://linux.conf.au/) 2012 to be held in Ballarat in Victoria in January.
+This is a little bit out of my comfort zone as I will only know one person there, and have never been the most confident at meeting new people.
+On top of which I have been somewhat less than active in online communities until now, so I will be a bit 'reputationless'
+I have been a big user of open source software at home and where possible professionally for over a decade now, and as time permits I am looking for opportunities to give back subject to family time commitments.  I figure I may as well start by actually meeting some like-minded people in person.
