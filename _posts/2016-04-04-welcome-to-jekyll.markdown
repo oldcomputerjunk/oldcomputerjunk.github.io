@@ -1,7 +1,8 @@
 ---
 layout: post
+slug: welcome-to-jekyll
 title:  "Welcome to Jekyll! (Switching over from Wordpress)"
-date:   2016-04-04 19:46:38
+date:   2016-04-04 01:00:00 # Time need to be UTC I think
 categories:
 - blog
 tags:
