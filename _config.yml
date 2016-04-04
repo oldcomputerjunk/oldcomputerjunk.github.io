@@ -9,5 +9,8 @@ url: "http://blog.oldcomputerjunk.net" # the base hostname & protocol for your s
 twitter_username: pastcompute
 github_username:  oldcomputerjunk
 
+pygments: true
+permalink: /:year/:title/
+
 # Build settings
 markdown: kramdown
