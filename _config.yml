@@ -1,5 +1,7 @@
 # Site settings
+timezone: Australia/Adelaide
 title: Just a pile of Old Computer Junk
+tagline: '"Its life Jim, but not as we know it"'
 email: blog@oldcomputerjunk.net
 description: > # this means to ignore newlines until "baseurl:"
   This is my personal blog about various software development, devops,
@@ -8,7 +10,6 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://blog.oldcomputerjunk.net" # the base hostname & protocol for your site
 twitter_username: pastcompute
 github_username:  oldcomputerjunk
-
 pygments: true
 permalink: /:year/:title/
 
