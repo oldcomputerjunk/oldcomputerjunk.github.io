@@ -4,7 +4,7 @@ title: Home
 # Ideally, just show content of latest post; do 'all' on another page
 ---
 <div class="post">
-  {% for post in site.posts limit:1 %}
+  {% for post in paginator.posts limit:1 %}
   <div>
     <h3 class="post-title">
       <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
@@ -19,7 +19,7 @@ title: Home
 
 <div class="pagination"> {% if paginator.previous_page %}
       {% if paginator.previous_page == 1 %}
-      <p class="prevLink"><a href="{{site.baseurl}}/" class="previous">newer entries</a></p>
+      <p class="prevLink"><a href="{{site.baseurl}}/" class="previous">newer</a></p>
       {% else %}
       <p class="prevLink"><a href="{{ site.baseurl }}/blog/page{{ paginator.previous_page }}" class="previous">newer</a></p>
       {% endif %}
