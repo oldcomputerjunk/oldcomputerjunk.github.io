@@ -11,7 +11,7 @@ categories:
 tags:
 - embedded
 - hacking
-- LCA2012
+- HackadayPrize
 ---
 
 So the [2015 Hackaday prize](http://hackaday.io/prize) is happening, until at least August.
