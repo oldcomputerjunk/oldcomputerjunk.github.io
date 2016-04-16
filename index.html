@@ -17,6 +17,17 @@ title: Home
   {% endfor %}
 </div>
 
+<div class="pagination"> {% if paginator.previous_page %}
+      {% if paginator.previous_page == 1 %}
+      <p class="prevLink"><a href="{{site.baseurl}}/" class="previous">newer entries</a></p>
+      {% else %}
+      <p class="prevLink"><a href="{{ site.baseurl }}/blog/page{{ paginator.previous_page }}" class="previous">newer</a></p>
+      {% endif %}
+      {% endif %}
+      {% if paginator.next_page %}
+      <p class="nextLink"><a href="{{ site.baseurl }}/blog/page{{ paginator.next_page }}" class="next">older</a></p>
+      {% endif %} </div>
+
 {% if site.related_posts %}
 <div class="related">
   <h2>Related Posts</h2>
