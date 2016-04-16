@@ -46,11 +46,11 @@ OpenWRT kernel patches are stored in two locations; generic patches applying aga
 To make life easy I wrote a script that would take a directory of OpenWRT kernel patches, apply to a git kernel repository and auto-commit. This allowed me to use gitg and git difftool to examine things efficiently.  It also worked well with using an external kernel tree to OpenWRT so I didnt have to worry yet about integrating patches into OpenWRT. This script is on [github](https://github.com/pastcompute/wrt-buildroot-manager/raw/master/apply-owrt-patches.sh), it should be easily adaptable for other experiments.
 
 (Note: to use an external tree, managed by git, use config options like the following:
-[crayon lang="plain"]
+```plain
 CONFIG_KERNEL_GIT_CLONE_URI="path/to/linux-stable"
 CONFIG_KERNEL_GIT_LOCAL_REPOSITORY="path/to/linux-stable"
 CONFIG_KERNEL_GIT_BRANCH="owrt_grsec_v3.14.25"
-[/crayon]
+```
 
 There were four primary rejects that required fixing.  This involved inspecting each case and working out what OpenWRT had changed in the way. Generally, this was caused because one or the other had modified the end of the same structure or macro, but luckily it turned out nothing significant and I was able to easily reconcile things. The hardest was because OpenWRT modifies vmstat.c for MIPS and the same code was modified by grsecurity to add extra memory protections.  At this point I attempted to build the system, and discovered three other minor cases that broke the build. These mispatches essentially were due to movements in one or two lines, or new code using internal kernel API modified by grsecurity, and were also easily repaired.  The most difficult mispatch to understand was where OpenWRT rewrites the kernel module loader code, apparently to make better use of MIPS memory structures and it took me a little while to understand how to try and fix things.
 
@@ -76,7 +76,7 @@ I was able to then complete an INITRAMFS image that I TFTP'd into my carambola2 
 
 Amazingly the system booted and provided me with a prompt.
 
-[crayon lang="plain"]
+```plain
 U-Boot 1.1.4-g33f82657-dirty (Sep 16 2013 - 16:09:28)
 
 =====================================
@@ -87,7 +87,7 @@ CARAMBOLA2 v1.0 (AR9331) U-boot
 Starting kernel ...
 
 [ 0.000000] Linux version 3.14.26-grsec (andrew@atlantis4) (gcc version 4.8.3 (OpenWrt/Linaro GCC 4.8-2014.04 r43591) ) #3 Sun Dec 14 18:08:52 ACDT 2014
-[/crayon]
+```
 
 I then discovered that no kernel modules were loading. A bit of digging and it turns out that a grsecurity option, _CONFIG_GRKERNSEC_RANDSTRUCT_  will auto-enable _CONFIG_MODVERSIONS_. One thing I learned at this point is that OpenWRT does not support _CONFIG_MODVERSIONS=y_, due to the way it packages modules with its packaging system. So an iteration later with the setting disabled, and everything appeared to be "working"
 
@@ -99,20 +99,20 @@ Of course, all this work is moot if we cant prove it works.
 
 Easy to check is auditing. For example, we now had these messages:
 
-[crayon lang="plain"]
+```plain
 [ 4.020833] grsec: mount of proc to /proc by /sbin/init[init:1] uid/euid:0/0 gid/egid:0/0, parent /[swapper:0] uid/euid:0/0 gid/egid:0/0
 [ 4.020833] grsec: mount of sysfs to /sys by /sbin/init[init:1] uid/euid:0/0 gid/egid:0/0, parent /[swapper:0] uid/euid:0/0 gid/egid:0/0
 [ 4.041666] grsec: mount of tmpfs to /dev by /sbin/init[init:1] uid/euid:0/0 gid/egid:0/0, parent /[swapper:0] uid/euid:0/0 gid/egid:0/0
-[/crayon]
+```
 
 However, the acid test would be enforcement of the NX flag. Here I used the code from [http://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart](http://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart) to test incorrect memory protections. Result:
 
-[crayon lang="plain"]
+```plain
 
 [19111.666360] grsec: denied RWX mmap of <anonymous mapping> by /tmp/bad[bad:1497] uid/euid:0/0 gid/egid:0/0, parent /bin/busybox[ash:467] uid/euid:0/0 gid/egid:0/0
 mmap failed: Operation not permitted
 
-[/crayon]
+```
 
 Success!
 

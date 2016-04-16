@@ -51,16 +51,16 @@ Here is a quick and dirty method for auditing a code-base for possible "goto fai
 
 
 We are looking for the following code fragments:
-[crayon lang="C"]
+```C
 if (some_condition)
     do_something();
 
 // ...
 
 if (some_condition) do something;
-[/crayon]
+```
 These are bad because inadvertent edits can produce:
-[crayon lang="C"]
+```C
 if (some_condition)
     do_something();
     oops_this_executes_always_instead_of_conditionally();
@@ -68,11 +68,11 @@ if (some_condition)
 // ...
 
 if (some_condition) do_something(); oops_this_executes_always();
-[/crayon]
+```
 This should be a big no-no!
 
 Instead, we treat either of the following as OK:
-[crayon lang="C"]
+```C
 if (some_condition) { do_something(); this_executes_conditionally(); }
 
 // ...
@@ -81,7 +81,7 @@ if (some_condition) {
     do_something();
     this_executes_conditionally();
 }
-[/crayon]
+```
 
 This is actually tighter than the Google Style Guide [4]; consider it wise to plan for multiple developers editing future code, some who may be inexperienced or "just passing through" - on the theory of if they expend the least energy, if the braces are there, they will use them!
 
@@ -89,9 +89,9 @@ This is actually tighter than the Google Style Guide [4]; consider it wise to pl
 ### Method #1 - from a Linux / Unix shell
 
 
-[crayon lang="bash"]
+```bash
 find -name "*.c*" -exec egrep -nH '^[\t ]*if[\t ]*\([^{]*$' {} \;
-[/crayon]
+```
 
 Extend the `-name` clause as required.
 
@@ -103,9 +103,9 @@ This works by finding all lines where the first non-whitespace is the `if` state
 
 _Caveat: I haven't had a chance to test this ye, so if it is wrong, please let me know!_
 
-[crayon lang="plain"]
+```plain
 if ([^{]*$
-[/crayon]
+```
 
 
 ### Notes
@@ -115,13 +115,13 @@ Now, these wont catch everything: if anything 'creative' is happening inside a p
 
 The above expressions, as-is, will also produce many false positives, if your coding guideline allows the following:
 
-[crayon lang="C"]
+```C
 if (some_condition)
 {
     do_something();
     this_executes_conditionally();
 }
-[/crayon]
+```
 
 I'll leave it as an exercise for the reader to adjust the regular expression to suit... it should extend to more complex situations if required.  You could also use `sed` or `pcregrep` or even `perl -e`for example.
 

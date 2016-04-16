@@ -40,30 +40,30 @@ So I upgraded my kernel and applied the patch. Here is Yet Another Tutorial on b
 
   * Install various pre-requisites - this will vary depending on your system.
 A fresh system will need many others, I needed these for LZ compression and for 'make xconfig'
-[crayon lang="bash"]
+```bash
 sudo aptitude install libqt4-dev=4:4.6.3-4 lzop
-[/crayon]
+```
 
   * 
 You need to have the Debian backports in your APT sources.list file. 
-[crayon lang="bash"]
+```bash
 deb http://backports.debian.org/debian-backports/ squeeze-backports main contrib non-free
-[/crayon]
+```
 Having added this, do a `sudo apt-get update`.
 
   * The ideal method these days is to be able to do most of the work without dropping to root or using sudo.  To achieve this add your account to the 'src' group and setup permissions accordingly.
-[crayon lang="bash"]
+```bash
 sudo adduser $LOGNAME src
 sudo chmod g+ws /usr/src
 sudo chgrp src /usr/src
-[/crayon]
+```
 At this point you will need to log out and log in (although you could ssh back in as yourself, and I read somewhere recently that this may not be strictly necessary with the right 'magic' incantations any more...)
 
 
 
   * I like to experiment with virtualisation so along the way I downloaded a patch that may be necessary for this from [http://users.wowway.com/~zlinuxman/kernel-package/linuxv3.diff](http://users.wowway.com/~zlinuxman/kernel-package/linuxv3.diff) (This is also an attachment to this post)
 Apply like:
-[crayon lang="bash"]
+```bash
 cd /usr/src
 wget http://users.wowway.com/~zlinuxman/kernel-package/linuxv3.diff
 cd /usr/share/kernel-package
@@ -71,7 +71,7 @@ sudo patch -b -p1
 
   * I also made my own patches to do an optimized build for my AMD64 Phenom:
 File phenom_1.patch:
-[crayon lang="diff"]
+```diff
 --- Makefile	2012-03-17 21:56:01.786123664 +1030
 +++ Makefile	2012-03-17 21:56:03.826122662 +1030
 @@ -205,7 +205,7 @@
@@ -83,9 +83,9 @@ File phenom_1.patch:
  HOSTCXXFLAGS = -O2
  
  # Decide whether to build built-in, modular, or both.
-[/crayon]
+```
 File phenom_2.patch:
-[crayon lang="diff"]
+```diff
 --- a/arch/x86/Makefile	2012-03-17 21:52:24.802227892 +1030
 +++ b/arch/x86/Makefile	2012-03-17 21:53:06.590208158 +1030
 @@ -50,7 +50,7 @@
@@ -97,9 +97,9 @@ File phenom_2.patch:
          cflags-$(CONFIG_MPSC) += $(call cc-option,-march=nocona)
  
          cflags-$(CONFIG_MCORE2) += \
-[/crayon]
+```
 File phenom_3.patch:
-[crayon lang="diff"]
+```diff
 --- a/arch/x86/Makefile_32.cpu	2012-03-17 22:03:38.529886664 +1030
 +++ b/arch/x86/Makefile_32.cpu	2012-03-17 22:04:08.701869960 +1030
 @@ -24,7 +24,7 @@
@@ -111,12 +111,12 @@ File phenom_3.patch:
  cflags-$(CONFIG_MCRUSOE)	+= -march=i686 $(align)-functions=0 $(align)-jumps=0 $(align)-loops=0
  cflags-$(CONFIG_MEFFICEON)	+= -march=i686 $(call tune,pentium3) $(align)-functions=0 $(align)-jumps=0 $(align)-loops=0
  cflags-$(CONFIG_MWINCHIPC6)	+= $(call cc-option,-march=winchip-c6,-march=i586)
-[/crayon]
+```
 
 
 
   * And of course, the patch to fix my Firewire subsystem crash as described in the previous post:
-[crayon lang="diff"]
+```diff
 --- a/block/bsg.c.orig	2012-03-17 22:06:42.053784045 +1030
 +++ b/block/bsg.c	2012-03-17 22:07:01.037773291 +1030
 @@ -985,7 +985,8 @@
@@ -129,7 +129,7 @@ File phenom_3.patch:
  	device_unregister(bcd->class_dev);
  	bcd->class_dev = NULL;
  	kref_put(&bcd-;>ref, bsg_kref_release_function);
-[/crayon]
+```
 
 
 
@@ -142,45 +142,45 @@ File phenom_3.patch:
 
 
   1. Install the Debian source package and unpack the tree:
-[crayon lang="bash"]
+```bash
 sudo apt-get install linux-source-3.2 linux-image-3.2
 cd /usr/src
 tar xjf linux-source-3.2.tar.bz2
-[/crayon]
+```
 
 
 Note - it turns out that this is in fact a 3.2.9 kernel.  For some reason the Debian version is 3.2.4-1~bpo60+1 ; go figure...
 
   2. Apply patches: assumes the patch files are in /usr/src :
-[crayon lang="bash"]
+```bash
 cd /usr/src/kernel-source-3.2
 patch < ../amm_phenom_1.patch
 patch -p1 < ../amm_phenom_2.patch
 patch -p1 < ../amm_phenom_3.patch
 patch -p1 < ../amm_bsg.patch
-[/crayon]
+```
 
 
 
   3. Configure the kernel build:
 I started by copying the default config from the binary backports kernel, and tweaking it for my own purposes (not shown here)
-[crayon lang="bash"]
+```bash
 cd /usr/src/linux-source-3.2
 cp /boot/config-3.2.0-0.bpo.1-amd64 .config
 make silentoldconfig
 make xconfig
 make-kpkg --rootcmd fakeroot modules_clean
 make-kpkg clean
-[/crayon]
+```
 
 
 
   4. Finally, build the Debian packages.
-[crayon lang="bash"]
+```bash
 CONCURRENCY_LEVEL=4 time fakeroot make-kpkg --initrd \
         --append-to-version=-xxx-preempt-amd64 --revision 1~yyy.00.00 \
         kernel_image kernel_headers kernel_debug
-[/crayon]
+```
 Here, CONCURRENCY_LEVEL=4 sets the number of concurrent make processes used, for taking advantage of a multi-core system.
 From the above settings, the actual package will become 'linux-image-3.2.9-xxx-preempt-amd64' with a Debian version of '1~yyy.00.00' and `cat /proc/version` output of '3.2.9-xxx-preempt-amd64'
 Using this mechanism means you can have concurrent 'flavours' of a kernel installed but still being upgradable within that flavour.
@@ -188,10 +188,10 @@ Using this mechanism means you can have concurrent 'flavours' of a kernel instal
 
 
   5. Installation:
-[crayon lang="bash"]
+```bash
 cd /usr/src
 sudo dpkg -i linux-image-3.2.9-xxx-preempt-amd64_1~yyy.00.00_amd64.deb linux-headers3.2.9-xxx-preempt-amd64_1~yyy.00.00_amd64.deb
-[/crayon]
+```
 This should also trigger any DKMS modules to rebuild if present.
 My NVidia 280.13 driver rebuilds fine with this version.
 

@@ -34,25 +34,25 @@ I tend to use my PC as a PVR and play recordings on my set top box by USB key.  
 
 
   1. If required, install clive and mencoder.  On Debian, this is done using the following command:
-[crayon lang="bash"]
+```bash
 sudo apt-get install clive mencoder
-[/crayon]
+```
 
 
 
   2. Navigate to the YouTube video page, and copy the URL.  Then in a terminal, enter the following command, pasting the URL where indicated.  Note that the single quotes are important as a couple of times I found that the URLs have characters that have meaning to bash:
-[crayon lang="bash"]
+```bash
 clive 'Paste the URL here'
-[/crayon]
+```
 
 
 
   3. After downloading completes, remaster the file into AVI format.
-[crayon lang="bash"]
+```bash
 mencoder somefile.flv -oac mp3lame -lameopts cbr:br=64 -ovc xvid \
   -xvidencopts bvhq=1:quant_type=mpeg:bitrate=1300:pass=2:turbo:threads=3 \
   -o somefile.avi
-[/crayon]
+```
 
 
 
@@ -80,24 +80,24 @@ My system is not a pure Debian Squeeze installation, I have quite a number of re
 The threads=3 argument is for my quad core Phenom, so you may need to reduce this for a dual core processor.
 
 I saved the command into a script:
-[crayon lang="bash"]
+```bash
 #!/bin/bash
 mencoder "${1}" -oac mp3lame -lameopts cbr:br=64 \
   -vf scale=512:376,expand=648:384 -ovc xvid \
   -xvidencopts bvhq=1:quant_type=mpeg:bitrate=1300:pass=2:turbo:threads=3 \
   -o `basename "$1"`.avi
-[/crayon]
+```
 Then you can run it in a loop over all videos:
-[crayon lang="bash"]
+```bash
 ./flv2avi.sh *.flv
-[/crayon]
+```
 
 The conference video is recorded at 320x240 which is a 4:3 aspect ratio.  This means by default it plays fine on older televisions, but will often be stretched by default on modern televisions with a 16:9 aspect ratio.  This can be centered usually with a button press on the remote, but sometimes even this is beyond, umm, less experienced friends and family (like elderly relatives) so you can instead 'pillar-box' the video into 16:9 so that it doesn't need reducing - although this will cause it to look compressed if played on a 4:3 television:
 
-[crayon lang="bash"]
+```bash
 mencoder somefile.flv -oac mp3lame -lameopts cbr:br=64 \
   -vf scale=512:376,expand=648:376 -ovc xvid \
   -xvidencopts bvhq=1:quant_type=mpeg:bitrate=1200:pass=2:turbo:threads=3 \
   -o somefile.avi
-[/crayon]
+```
 

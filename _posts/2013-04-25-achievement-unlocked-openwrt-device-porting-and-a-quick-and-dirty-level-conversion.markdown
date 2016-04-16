@@ -88,7 +88,8 @@ Going he other way, I just ran three signal 1N4148 diodes in series, this droppe
 
 And several rather late nights^H^H^H early mornings later:
 
-[crayon lang="bash"]andrew@atlantis3:~/develop/openwrt/repos/openwrt$ telnet 192.168.1.1
+```bash
+andrew@atlantis3:~/develop/openwrt/repos/openwrt$ telnet 192.168.1.1
 Trying 192.168.1.1...
 Connected to 192.168.1.1.
 Escape character is '^]'.
@@ -114,7 +115,7 @@ BARRIER BREAKER (Bleeding Edge, r36419)
 * 2 tsp. Creme de Cacao
 -----------------------------------------------------
 root@OpenWrt:/#
-[/crayon]
+```
 --
 
 Links:

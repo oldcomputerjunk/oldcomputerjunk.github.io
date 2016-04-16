@@ -69,10 +69,10 @@ Note also, as the logical address is 32 bits, this is where the 2TB limit of the
 
 The boot sector was a 512 byte file.  I edited the easy way using ghex2.  I still needed to fill 62 sectors before the NTFS partition. Then join it all together.
 
-[crayon lang="bash"]
+```bash
 ~$ dd of=padding.bin bs=512 count=62 if=/dev/zero
 ~$ cat mbr.bin padding.bin ntfs_disk.img > test.img
-[/crayon]
+```
 
 This resulted in a file I could use with kvm.
 
@@ -88,14 +88,14 @@ Procedure:
 
 	
   1. Start the virtual machine, and make it stop for single stepping after starting the CPU. The important options here are `-s -S`.
-[crayon lang="bash"]
+```bash
 ~$ ~/opt/qemu-1.4.2/bin/qemu-system-i386 -boot c -m 256 -enable-kvm -hda disk.img -cpu 486 -no-acpi -s -S
-[/crayon]
+```
 
 
 	
   2. Start gdb and remotely attach to the VM.
-[crayon lang="bash"]
+```bash
 ~$ gdb
 target remote localhost:1234
 set architecture i8086
@@ -113,7 +113,7 @@ stepi
 stepi
 br *0x7c00 # set breakpoint in the MBR
 cont
-[/crayon]
+```
 
 
 

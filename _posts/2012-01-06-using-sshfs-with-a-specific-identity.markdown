@@ -20,15 +20,15 @@ The program [sshfs](http://fuse.sourceforge.net/sshfs.html) is a Linux tool whic
 The reason for getting sshfs working with additional options was I wanted to try executing some detailed file and archiving operations in my web space, and I wanted to script it locally from my dev machine.  SSH access required both a different TCP port and a non-default identity.
 
 The solution:
-[crayon lang="bash"]
+```bash
 sshfs -o ssh_command="ssh -i ~/.ssh/somekey -p 11234" \
         user@destination.host: localMountPoint
-[/crayon]
+```
 
 For the above to work, your local account also needs to be in the 'fuse' group (You may need to logout for this to take effect):
-[crayon lang="bash"]
+```bash
 sudo groupmod -a -G fuse username
-[/crayon]
+```
 
 References:
 

@@ -42,7 +42,7 @@ I haven't blogged recently due to various family mini-crises to do with pets, si
 
 As it is getting late this post will conclude with the command line used to build and install my kernel, and I will expand on this in the next post.
 
-[crayon lang="bash"]
+```bash
 cd /usr/src
 cd linux-source-3.2
 cp /boot/config-3.2.0-0.bpo.1-amd64 .config
@@ -52,7 +52,7 @@ CONCURRENCY_LEVEL=4 time fakeroot make-kpkg \
               --append-to-version=-mine-preempt-amd64 \
               --revision 1~mine1.00.00 kernel_image kernel_headers
 sudo dpkg -i linux-{headers,image}-3.2.9-mine-preempt-amd64_1~mine1.00.00_amd64.deb
-[/crayon]
+```
 
 Things to note:
 

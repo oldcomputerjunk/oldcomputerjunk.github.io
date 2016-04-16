@@ -21,11 +21,11 @@ This package did the job dutifully placing some usb0 or usb1 icon on my desktop 
 Today I finally fixed this by editing the file `/etc/usbmount/usbmount.conf` and setting NTFS and FAT partitions to be permissioned with `nobody,users` ... maybe not the 'best' practice but more than sufficient for my main desktop which is only used by me, my son and occasionally my SO (when her Windows7 laptop breaks:-) )
 
 To configure usbmount to mount USB drives writable by everyone in the users group, simply append the following to `/etc/usbmount/usbmount.conf`.  This will make it all magically work, no services even needed restarting:
-[crayon lang="bash"]
+```bash
 MOUNTOPTIONS="sync,noexec,nodev,noatime,nodiratime"
 FS_MOUNTOPTIONS="-fstype=vfat,gid=users,uid=nobody,umask=002,sync \
                  -fstype=ntfs,gid=users,uid=nobody,umask=002,sync"
-[/crayon]
+```
 
 The `atime`, etc. options are for performance and reducing writes onto Flash.  The file seems to be shell sourced somewhere inside udev so normal shell scripting could be used if desired.
 

@@ -39,7 +39,7 @@ So with a bit of tweaking I was able to get WDS working between the TP-LINK and 
 
 Content of /etc/config/wireless:
 
-[crayon lang="plain" wrap="false"]
+```plain
 config 'wifi-device' 'radio0'
 	option 'type' 'mac80211'
 	option 'macaddr' 'xx:xx:xx:xx:xx:xx'
@@ -54,7 +54,7 @@ config 'wifi-iface'
 	option 'wds' '1'
 	option 'short_preamble' '1'
 	option 'bssid' 'yy:yy:yy:yy:yy:yy'
-[/crayon]
+```
 
 
 
@@ -64,7 +64,7 @@ config 'wifi-iface'
 
 Content of /etc/config/wireless:
 
-[crayon lang="plain" wrap="false"]
+```plain
 config wifi-device  wl0
         option type     broadcom
         option channel  9
@@ -86,7 +86,7 @@ config wifi-iface
         option hidden 1
         option bssid xx:xx:xx:xx:xx:xx
         option short_preamble 1
-[/crayon]
+```
 
 
 

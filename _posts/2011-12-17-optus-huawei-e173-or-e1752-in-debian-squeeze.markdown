@@ -33,10 +33,10 @@ So the solution:
 
 
   2. Edit `/etc/network/interfaces` and add the following:
-[crayon lang="plain"]
+```plain
 allow-hotplug wwan0
 iface wwan0 inet dhcp
-[/crayon]
+```
 
 
 
@@ -59,9 +59,9 @@ iface wwan0 inet dhcp
 I then hit the problem described [here](http://osdir.com/ml/comp.os.linux.hardware/2011-09/msg00015.html), where the wrong MAC address was set on the card!
 
 The workaround is
-[crayon lang="bash"]
+```bash
 ifconfig wwan0 hw ether 00:01:02:03:04:05
-[/crayon] (script updated to do this automagically)
+``` (script updated to do this automagically)
 
 
 
@@ -72,7 +72,7 @@ ifconfig wwan0 hw ether 00:01:02:03:04:05
 **TL;DR**
 
 Script for `~/bin/start-optus-e173.sh`:
-[crayon lang="bash"]
+```bash
 #!/bin/bash
 #
 # Script to startup USB modem
@@ -129,12 +129,12 @@ ifup wwan0
 ifconfig | grep -A1 wwan0
 kill $PID $PID2
 exit 0
-[/crayon]
+```
 
 For now it needs root privileges, I could probably add myself to the right group and make it work, but I cant be bothered. If you have selinux enable it would probably complicate things even further.
 
 Successful Output:
-[crayon lang="default" show-plain-default="true"]
+```default
 ^RSSI:4
 ^RSSI:4
 ^RSSI:4
@@ -178,7 +178,7 @@ bound to 58.109.51.163 -- renewal in 2847 seconds.
 wwan0     Link encap:Ethernet  HWaddr 02:50:f3:00:00:00  
           inet addr:199.199.199.198  Bcast:199.199.199.199  Mask:255.255.255.248
 
-[/crayon]
+```
 
 
 

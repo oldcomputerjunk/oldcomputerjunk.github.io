@@ -49,7 +49,8 @@ What could be done to address this?
 OpenWRT provides a hook for appending to the global compiler `CFLAGS` but there is no similar hook for the linker stage. We could add those flags to the global `CFLAGS` and they can in fact flow through to the linker for many programs, but that would also be redundant as the flags are irrelevant to the compiler.  In the end I decided I would modify the OpenWRT source to add a new global CONFIG option, which adds `-Wl,-z,relro -Wl,-z,now` to the global `LDFLAGS` instead.
 
 The following patch achieves that (note, I have left out some of the help for brevity):
-[crayon lang="text"]diff --git a/rules.mk b/rules.mk
+```text
+diff --git a/rules.mk b/rules.mk
 index c9efb9e..e9c58d8 100644
 --- a/rules.mk
 +++ b/rules.mk
@@ -80,7 +81,7 @@ index 7257f1d..964200d 100644
  
  menuconfig EXTERNAL_TOOLCHAIN
         bool
-[/crayon]
+```
 Having attched OpenWRT, and enabled the new flag, lets rebuild everything again and run another checksec scan.
 
 [![owrt_cs_report_1_x86](http://blog.oldcomputerjunk.net/wp-content/uploads/2014/09/owrt_cs_report_1_x86.png)](http://blog.oldcomputerjunk.net/wp-content/uploads/2014/09/owrt_cs_report_1_x86.png)What a difference!

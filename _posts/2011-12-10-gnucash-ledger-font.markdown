@@ -26,13 +26,13 @@ Eventually I found this [post](http://lists.gnucash.org/pipermail/gnucash-devel/
 
 
 So I created a new file `~/.gtkrc-2.0.gnucash` and added the following
-[crayon lang="bash"]
+```bash
 style "gnc-register"
 {
   font_name    = "Sans 8"
 }
 widget "*.GnucashSheet" style "gnc-register"
-[/crayon]
+```
 Restart Gnucash and voila a full screen of entries.
 
 

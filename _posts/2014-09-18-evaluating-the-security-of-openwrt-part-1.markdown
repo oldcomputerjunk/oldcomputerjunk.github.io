@@ -73,23 +73,24 @@ The basic procedure for using the tool against an OpenWRT build is straightforwa
 When repeating a test I made sure I cleaned out the toolchain and the target binaries, because I ahve been bitten by spuriuos results caused by changes to the configuration not propagating through all components.  This includes manually removing the staging_dir which may be missed by `make clean`. This made each build take around 20+ minutes on my quad core Phenom machine.
 
 I used the following base configuration, only changing the target:
-[crayon lang="Makefile"]
+```Makefile
 CONFIG_DEVEL=y
 CONFIG_DOWNLOAD_FOLDER="/path/to/downloads"
 CONFIG_BUILD_LOG=y
 CONFIG_TARGET_ROOTFS_TARGZ=y
-[/crayon]
+```
 
 I repeated the test for three platform configurations initially (note, these are mutually exclusive choices) - the Carambola2 and rt305x are MIPS platforms.
-[crayon lang="Makefile"]
+```Makefile
 CONFIG_TARGET_ramips_rt305x_MPRA1=y
 CONFIG_TARGET_x86_kvm_guest=y
 CONFIG_TARGET_ar71xx_generic_CARAMBOLA2=y
-[/crayon]
+```
 
 There are several directories most likely to have binaries of interest, so of course I scanned them using a script, essentially consisting of:
 
-[crayon lang="bash"]for p in lib usr/lib sbin usr/sbin bin usr/bin ; do checksec.sh --dir $p ; done[/crayon]
+```bash
+for p in lib usr/lib sbin usr/sbin bin usr/bin ; do checksec.sh --dir $p ; done```
 
 The results were interesting.
 

@@ -61,18 +61,18 @@ The usual method for building a package `dpkg-buildpackage -rfakeroot -b` doesn'
   1. 
 Download / install the prerequisites (note - this may vary depending on what is already installed).
 This assumes that wheezy is also in `sources.list` as some of these install from wheezy with no dependency issues.
-[crayon lang="bash"]
+```bash
 sudo aptitude update
 sudo aptitude install libwebkit-dev python-dev libdbi-dev
 sudo aptitude install dh-autoreconf flex
 sudo aptitude install libgmp-dev -t wheezy
-[/crayon]
+```
 
 
 
   2. 
 Build GnuCash deb package 2.4.8 from source, the follow method will ignore dependencies on libAqBanking (and build without that feature):
-[crayon lang="bash"]
+```bash
 apt-get source guile-1.8 -twheezy
 apt-get source gnucash -twheezy
 export MAKEFLAGS=-j5
@@ -86,7 +86,7 @@ cd gnucash-2.4.8
 DEB_BUILD_OPTIONS="parallel=5" fakeroot debian/rules binary
 cd ..
 sudo dpkg -i gnucash*.deb python-gnucash*.deb
-[/crayon]
+```
 
 
 

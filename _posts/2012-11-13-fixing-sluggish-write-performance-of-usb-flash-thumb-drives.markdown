@@ -67,8 +67,9 @@ The following command sequence will accomplish this under Linux.  This assumes y
 
 
     1. Run GNU fdisk with units in sector mode not cylinder mode.  Then print the existing partition table (enter _p_ when prompted.  Below you can see the start sector of the existing partition is at sector 63.  Note this is also a primary partition.  This is typical of USB flash disks you might purchase at the local supermarket...
-[crayon lang="bash"]fdisk -u /dev/sdd[/crayon]
-[crayon highlight="false"]
+```bash
+fdisk -u /dev/sdd```
+```
 GNU Fdisk 1.2.4
 Copyright (C) 1998 - 2006 Free Software Foundation, Inc.
 This program is free software, covered by the GNU General Public License.
@@ -90,12 +91,12 @@ Units = sectors of 1 * 512 = 512 bytes
 Warning: Partition 1 does not end on cylinder boundary.                   
 Command (m for help):   
 
-[/crayon]
+```
 
 
 
     2. Delete the partition:
-[crayon highlight="false"]
+```
 Command (m for help): d
 Partition number (1-1): 1                                                 
 Command (m for help): p
@@ -106,12 +107,12 @@ Units = sectors of 1 * 512 = 512 bytes
 
    Device Boot      Start         End      Blocks   Id  System 
 Command (m for help): 
-[/crayon]
+```
 
 
 
     3. Recreate the partition, aligned at sector 256 (131072 bytes), and set the type back to FAT32 LBA (in this case matching what previously existed) (type 'c', or 0x0c, i.e. FAT32 LBA).  Use of FAT32 LBA allows use to start the filesystem on an arbitrary sector bearing no relationship to legacy cylinders, etc.  The final sector depends on the disk size.
-[crayon highlight="false"]
+```
 Command (m for help): n                                                   
 Partition type                                                            
    e   extended
@@ -132,26 +133,26 @@ Units = sectors of 1 * 512 = 512 bytes
    Device Boot      Start         End      Blocks   Id  System 
 /dev/sdd1             256    31567724    15783831    c  FAT32 LBA
 Command (m for help):   
-[/crayon]
+```
 
 
 
     4. Save changes:
-[crayon highlight="false"]
+```
 Command (m for help): w                                                   
 Information: Don't forget to update /etc/fstab, if necessary.             
 
 
 Writing all changes to /dev/sdd.
-[/crayon]
+```
 
 
 
     5. Format the partition, setting the number of reserved sectors so that the FAT table remains aligned at a 128kB boundary.  Assuming sectors per cluster, s=128 (65536 bytes), and our partition length of 31567469 sectors, we want the first fat to start at the 256th sector within the partition (which is OK as the partition itself is aligned.)  For some sizes of flash disk, this can be an iterative process, but generally setting the number of reserved sectors to 256 will achieve what we want.
-[crayon lang="sh"]
+```sh
 mkfs.vfat -v -F 32 -n label -s 128 -R 256 /dev/sdd1
-[/crayon]
-[crayon highlight="false"]
+```
+```
 mkfs.vfat 3.0.9 (31 Jan 2010)
 /dev/sdi1 has 255 heads and 63 sectors per track,
 logical sector size is 512,
@@ -161,15 +162,15 @@ FAT size is 2048 sectors, and provides 246586 clusters.
 There are 256 reserved sectors.
 Volume ID is 3bd81e55, volume label fatflash   
 
-[/crayon]
+```
 
 
 
     6. This is the most important step - verify that the chosen number of reserved sectors has resulted in an aligned FAT table and aligned data area.
-[crayon lang="sh"]
+```sh
 fsck.vfat /dev/sdd1
-[/crayon]
-[crayon highlight="false"]
+```
+```
 fsck from util-linux-ng 2.17.2
 dosfsck 3.0.9 (31 Jan 2010)
 dosfsck 3.0.9, 31 Jan 2010, FAT32, LFN
@@ -192,7 +193,7 @@ Data area starts at byte 2228224 (sector 4352)
 Checking for unused clusters.
 Checking free cluster summary.
 /dev/sdd1: 1 files, 1/246586 clusters
-[/crayon]
+```
 The important figure here, is the data area sector - it must be an integer multiple of 256, and 256 x 17 == 4362 in this example.
 
 

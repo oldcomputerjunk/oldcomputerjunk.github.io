@@ -30,13 +30,13 @@ After a few days taking notes and some experimentation I discovered the followin
 
 After initially suspecting it was something to do with firewire or ACPI (shudder) looking at the stack trace, and the coincidence with removing the drive, it seemed in fact to be an issue in the SCSI subsystem somewhere.  In fact I then worked out the following commands would always repeat the problem:
 
-[crayon lang="bash"]
+```bash
 umount /mnt/data
 scsi_stop /dev/sdh
 echo fw1.0 > /sys/bus/firewire/drivers/sbp2/unbind
 # The crash happens after next command
 echo fw1.1 > /sys/bus/firewire/drivers/sbp2/unbind
-[/crayon]
+```
 
 At this stage I stumbled over an almost identical stack trace inthe [lkml.org](lkml.org) mailing list, which luckily short-circuited my experimentation - learning about the /sys and scsi device manipulation is kind of useful maybe but I had a lot of other things to do as well.
 

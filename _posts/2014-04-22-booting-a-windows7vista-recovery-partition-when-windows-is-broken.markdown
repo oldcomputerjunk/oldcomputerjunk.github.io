@@ -32,34 +32,34 @@ First thing I did was create an image to play with in qemu.  Figuring that the i
 
 Firstly, upon mounting the recovery partition, you can see what appears to be a bog standard cut down Windows filesystem:
 
-[crayon lang="plain"]
+```plain
 total 312
 drwxr-xr-x  3 root root   4096 Mar 27  2007 Documents and Settings
 drwxr-xr-x 11 root root   4096 Mar 27  2007 MiniNT
 -rwxr-xr-x  1 root root  47564 Feb 28  2006 NTDETECT.COM
 -rwxr-xr-x  1 root root 260272 Feb 28  2006 NTLDR
-[/crayon]
+```
 
 Examine the partition layout:
 
-[crayon lang="bash"]
+```bash
 parted laptop.img -s unit s print
-[/crayon]
+```
 
 Results:
-[crayon lang="plain"]
+```plain
  1      63s         57401969s   57401907s  primary   ntfs         boot
  2      57403392s   86075391s   28672000s  primary   ntfs
  3      86075392s   139909119s  53833728s  extended               lba
  5      86077440s   139909119s  53831680s  logical   ntfs
  4      139910085s  156296384s  16386300s  primary   fat32        diag
-[/crayon]
+```
 
 The recovery partition is #4.  Note that 'diag' is actually type 0xde when checked using fdisk.
 
 Second, assemble a fresh experimental disk:
 
-[crayon lang="bash"]
+```bash
 dd if=laptop.img bs=512 count=63 > bootsectors.bin
 dd if=laptop.img bs=512 skip=139910085 > recovery.bin
 cp bootsectors.bin test.bin
@@ -67,7 +67,7 @@ cp bootsectors.bin test.bin
 # luckily it is at the end of the disk
 truncate -s $(( 139910085 * 512 )) test.bin 
 cat recovery.bin >> test.bin
-[/crayon]
+```
 
 As a check the size of test.bin and laptop.img should be identical.
 
@@ -75,17 +75,17 @@ Now, attempt to boot the image in QEMU.
 
 This is achievable using Grub2, and in this case I chose SuperGub2Disk, [http://www.supergrubdisk.org](http://www.supergrubdisk.org).
 
-[crayon lang="bash"]
+```bash
 qemu -enable-kvm  -hda test.bin -m 1024 -cdrom super_grub2_disk_i386_pc_2.00s2-rc5.iso -boot d
-[/crayon]
+```
 
 After the boot screen starts, choose 'c' for a command line, and use the following:
-[crayon lang="plain"]
+```plain
 set root=(hd0,4)
 insmod ntldr
 ntldr ($${root})/ntldr
 boot
-[/crayon]
+```
 
 For once, this worked first time, starting the Powerquest recovery software.
 

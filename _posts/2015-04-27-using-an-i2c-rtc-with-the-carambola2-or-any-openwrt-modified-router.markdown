@@ -24,17 +24,17 @@ Regardless, here is how to use an i2c RTC with the Carambola2 or any other ar71x
 
 	
   * Patch the file **target/linux/ar71xx/generic/target.mk** as follows:
-[crayon lang="plain"]
+```plain
 -FEATURES += squashfs
 +FEATURES += squashfs +rtc
-[/crayon]
+```
 
 	
   * Patch the kernel configuration **target/linux/ar71xx/config-3.xx** where (**xx** depends on your version of OpenWRT) as follows:
-[crayon lang="plain"]
+```plain
 +CONFIG_RTC_CLASS=y
 +CONFIG_RTC_DRV_DS1307=m
-[/crayon]
+```
 
 	
   * Note: the kernel configuration can be modified via the kernel build system using the command **make kernel_menuconfig**
@@ -44,11 +44,11 @@ Regardless, here is how to use an i2c RTC with the Carambola2 or any other ar71x
 
 	
   * Add the module to your image:
-[crayon lang="plain"]
+```plain
 CONFIG_RTC_SUPPORT=y
 CONFIG_DEFAULT_RTC_SUPPORT=y
 CONFIG_PACKAGE_kmod-rtc-ds1307=y
-[/crayon]
+```
 
 	
   * If you have previously built OpenWRT then remove the **tmp/** directory, or the change '+rtc' will be ignored and the DS1307 module will not be included in your image
@@ -78,10 +78,10 @@ Following is an aggregation of information I was already able to find elsewhere 
 
 
   * Create the following content, where in this example 18 == SDA pin id and 19 == SCL pin id
-[crayon lang="plain"]
+```plain
 i2c-gpio-custom bus0=0,18,19
 rtc-ds1307
-[/crayon]
+```
 
 
 
@@ -89,7 +89,7 @@ rtc-ds1307
 
 
   * Create a script, **/etc/init.d/rtc-driver** to load the device driver and set the time.
-[crayon lang="plain"]
+```plain
 #!/bin/sh /etc/rc.common
 logger "Setup i2c RTC"
 echo ds1307 0x68 > '/sys/class/i2c-dev/i2c-0/device/new_device'
@@ -99,14 +99,14 @@ else
   logger "RTC set hwclock"
   hwclock -s
 fi
-[/crayon]
+```
 
 
 
   * Create a symlink...
-[crayon lang="plain"]
+```plain
 ln -s /etc/init.d/rtc-driver /etc/rc.d/S11rtc-driver
-[/crayon]
+```
 
 
 
@@ -114,13 +114,13 @@ ln -s /etc/init.d/rtc-driver /etc/rc.d/S11rtc-driver
 
 
 You can test the above out before scripting it by booting the system and manually stepping through:
-[crayon lang="plain"]
+```plain
 modprobe i2c-gpio-custom bus0=0,18,19
 i2cdetect -l
 modprobe rtc-ds1307
 echo ds1307 0x68 > '/sys/class/i2c-dev/i2c-0/device/new_device'
 hwclock
-[/crayon]
+```
 
 Enjoy!
 

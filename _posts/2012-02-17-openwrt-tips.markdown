@@ -25,9 +25,9 @@ When first installed, the OpenWRT image is built into a [squashfs](http://www.sq
 So how are deleted files handled? It turns out there is a special file made in each directory in `/overlay`, that mini_fo hides from view in the applicable root level directory, that records files on `/rom` that are deleted.
 
 The special files are prefixed with 'META_', for  example: `META_dAfFgHE39ktF3HD2sr`, the content is simply one file per line, two fields, the letter D followed by the deleted file: 
-[crayon lang="text"]
+```text
 D S96led
-[/crayon]
+```
 
 
 Undelete files by simply removing the entry from the META_ file.

@@ -27,32 +27,32 @@ Brother actually do a reasonably good job supporting all of their recent equipme
 I finally got around to setting things up for network scanning.
 
 First you need to install the scanner driver; in my case it was the brsaneconfig3 driver.  You then set this up as follows:
-[crayon lang="bash" wrap="true"]
+```bash
 sudo dpkg -i brscan3-0.2.11-5.amd64.deb
 sudo brsaneconfig3 -a name="MFCJ415W" model=MFC-J415W \
                     nodename=printerhostname
-[/crayon]
+```
 
 Running `brsaneconfig -q` will output a (large number of) supported devices, and any it finds on your network:
-[crayon lang="bash" wrap="true"]
+```bash
 $ brsaneconfig3 -q
 
 
 Devices on network
   0 MFCJ415W            "MFC-J415W"         N:printerhostname
-[/crayon]
+```
 
 You can then run up gimp or your favourite graphical / scanner tool and test that scanning works as expected.
 
 Having done this, I then set up remote scanning.  This involved running a service on the destination computer, which I set up to run as the logged in user from the openbox autostart. For some reason the tool (undocumented) requires the argument '2' to get help to show... The simplest method is as follows:
 
-[crayon lang="bash" wrap="true"]
+```bash
 $ sudo dpkg -i brscan-skey-0.2.4-1.amd64.deb
 $ brscan-skey -h -2
 $ brscan-skey -l
  MFCJ415W          : brother3:net1;dev0  : 192.168.1.14         Active
 $ brscan-skey -a MFCJ415W
-[/crayon]
+```
 
 After this setup, you simply need to run `brscan-skey` when you want to scan to your PC.  From the MFC LCD panel, you choose 'Scan', 'File' and then it should find your computer, and it displays the current user name as the computer for some reason.
 
@@ -71,7 +71,7 @@ Well of course I didn't want to stop there.  To make the system more user friend
 So I wrote a script, which starts with my X/session for openbox.
 
 This is the essentials:
-[crayon lang="bash" wrap="false"]#!/bin/bash
+```#!/bin/bash
 #
 # Needs: apt-get install imagemagick 
 
@@ -103,7 +103,7 @@ brscan-skey | while read -r msg ; do
 done
 
 notify-send -t 5000 "Brother MFC-J415W" "brscan-skey died for some reason…"
-[/crayon]
+```
 
 The way this works is as follows:
 * brscan-skey outputs received file information on stdout

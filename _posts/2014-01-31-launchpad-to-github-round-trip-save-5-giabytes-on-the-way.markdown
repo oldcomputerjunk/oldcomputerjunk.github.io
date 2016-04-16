@@ -59,7 +59,8 @@ Since sometime around 1.8 a new remote helper was made available with git, for c
 
 Prior to cloning to git, however, I ensured I also had a tracking branch created inside Launchpad, to facilitate upstream integration.  First I followed the instructions on the MariaDB wiki [1] to create a local bzr repository, and created my maintenance branch from **lp:maria**.  The end result should look like this:
 
-[crayon lang="bash"].../bzr/oqgraph-maintenance$ bzr info
+```bash
+.../bzr/oqgraph-maintenance$ bzr info
 Repository tree (format: 2a)
 Location:
 shared repository: /scratch/bzr
@@ -68,27 +69,30 @@ repository branch: .
 Related branches:
 push branch: bzr+ssh://bazaar.launchpad.net/~andymc73/maria/oqgraph-maintenance/
 parent branch: bzr+ssh://bazaar.launchpad.net/+branch/maria/
-[/crayon]
+```
 
 Now it is possible to make a git repository from the bzr repository.
 
-[crayon lang="bash"]cd ../..
+```bash
+cd ../..
 mkdir git && cd git
 git clone bzr::../bzr/oqgraph-maintenance
-[/crayon]
+```
 
 MariaDB is showing its long and venerable history, with over 80000 commits in a very complex branch structure; the downside of this includes significant lag on simple operations such as **git status** or firing up the GUI **gitg**.  But otherwise, the history is complete and corresponds with that within the bzr repository; the gir-bzr remote helper does its job well.
 
 We also have remotes that actually point to the bzr repository:
 
-[crayon lang="bash"]$ .../git/oqgraph-maintenance$ git remote -v
+```bash
+$ .../git/oqgraph-maintenance$ git remote -v
 origin    bzr::/scratch/bzr/maria-oqgraph-maintenance/ (fetch)
 origin    bzr::/scratch/bzr/maria-oqgraph-maintenance/ (push)
-[/crayon]
+```
 
 One thing I had to do, was cleanup an extraneous tag **HEAD** which I removed the ref for it to avoid ambiguous ref errors (this doesn't interfere with round trip operations):
-[crayon lang="bash"]git tag -d HEAD
-git reset --hard HEAD[/crayon]
+```bash
+git tag -d HEAD
+git reset --hard HEAD```
 
 
 
@@ -110,16 +114,17 @@ Finally we can apply a subdirectory filter.
 
 I started by making a new clone.  We need to retain the original for round trip integration, and for starting again if we made a mistake.  Having done that, we want to find the oldest commit in any part of the OQGraph software.
 
-[crayon lang="bash"]cd ..
+```bash
+cd ..
 git clone oqgraph-maintenance oqgraph-standalone
 cd oqgraph-standalone
 git log --all --format="%H %ai %ci %s" mysql-test/suite/oqgraph
-git log --all --format="%H %ai %ci %s" storage/oqgraph[/crayon]
+git log --all --format="%H %ai %ci %s" storage/oqgraph```
 
 From a visual examination of the log output, the oldest relevant commit might be for example _7de3c2e1d02a2a4b645002c9cebdaa673f05e767_.  It would be feasible to write a script to work this out by parsing and sorting the dates, but I didn't bother spending the time at this point.  To remove the old commits, we need to make a new 'start of history', which we do by adding a graft then running a filter branch command.  We could run just **filter-branch** by itself, but at the same time we also remove everything that is not part of the OQGraph storage engine.
 
 (Note that the each command one long line, I have separated each line by a blank here)
-[crayon lang="bash" wrap="true"]git rev-parse --verify 7de3c2e1d02a2a4b645002c9cebdaa673f05e767 >> .git/info/grafts
+```git rev-parse --verify 7de3c2e1d02a2a4b645002c9cebdaa673f05e767 >> .git/info/grafts
 
 git filter-branch --index-filter 'git rm --cached -qr --ignore-unmatch -- . && git reset -q $GIT_COMMIT -- storage/oqgraph mysql-test/suite/oqgraph' --tag-name-filter cat --prune-empty -- --all
 
@@ -127,7 +132,7 @@ git show-ref |awk '{print $2}' |egrep ^refs/original|xargs -L1 git update-ref -d
 
 git reflog expire --expire=now --all
 
-git gc --aggressive --prune=now[/crayon]
+git gc --aggressive --prune=now```
 
 Here, the **index-filter option** manipulates the git index, one entry at a time; we unstage the current commit, and re-commit just the files of interest.  This is faster than a subdirectory filter because we don't check out the entire tree, and also we can keep two directories instead of just one.  The **tag-name-filter** is crucial, without it we loose all the MariaDB history tags. Having **prune-empty** removes commits with no data, and **all** ensures we look at all branches rather than just the direct ancestors of HEAD.
 
@@ -142,17 +147,17 @@ Although faster than a subdirectory filter it still takes a couple of hours to r
 There is still some work to do however; a large number of merge commits remain, all of which are empty, comprising history both beyond and after the graft point, and obscuring our OQGraph commits.  The previous argument **prune** doesn't remove merge commits, so we need to do that differently.   The data is dramatically reduced, so subdirectory filter will be quite fast, and also removes merge commits, but we still need to retain history out in **mysql-test/suite/oqgraph** which would be lost if we just just did a **subdirectory-filter**.  So we need to rewrite the related paths first.
 
 (Note again each command a one long line, I have separated lines by blanks)
-[crayon lang="bash" wrap="true"]git filter-branch --index-filter 'git ls-files -s | sed -e "s@mysql-test/suite/oqgraph@storage/oqgraph/maria/mysql-test/suite/oqgraph@" | GIT_INDEX_FILE="$GIT_INDEX_FILE.new" git update-index --index-info && test -e "$GIT_INDEX_FILE.new" && mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE" || true' --tag-name-filter cat --prune-empty -- --all
+```git filter-branch --index-filter 'git ls-files -s | sed -e "s@mysql-test/suite/oqgraph@storage/oqgraph/maria/mysql-test/suite/oqgraph@" | GIT_INDEX_FILE="$GIT_INDEX_FILE.new" git update-index --index-info && test -e "$GIT_INDEX_FILE.new" && mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE" || true' --tag-name-filter cat --prune-empty -- --all
 
-git filter-branch -f --subdirectory-filter storage/oqgraph --tag-name-filter cat --prune-empty -- --all[/crayon]
+git filter-branch -f --subdirectory-filter storage/oqgraph --tag-name-filter cat --prune-empty -- --all```
 
 Here, running **index-filter** with **git update-index** we can 'rename' file paths affected by a commit without aggecting the actual commit.  So I used **sed** to change **mysql-test/suite/oqgraph** paths to **storage/oqgraph/maria/mysql-test/suite/oqgraph**.  These now survive the subdirectory-filter and we retain a complete history of OQGraph files without really changing anything.
 
 I ran one final clean up:
-[crayon lang="bash" wrap="true"]git show-ref |awk '{print $2}' |egrep ^refs/original|xargs -L1 git update-ref -d
+```git show-ref |awk '{print $2}' |egrep ^refs/original|xargs -L1 git update-ref -d
 git reflog expire --expire=now --all
 git gc --aggressive --prune=now
-git repack -a -d -l[/crayon]
+git repack -a -d -l```
 
 Now I had a complete history of OQGraph, with only OQGraph, including contemporary MariaDB tags, which I pushed to Github.
 The results are at [https://github.com/andymc73/oqgraph](https://github.com/andymc73/oqgraph), and you could find the corresponding commits in the MariaDB trunk on Launchpad if you desired. 
