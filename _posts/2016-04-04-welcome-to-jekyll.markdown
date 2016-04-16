@@ -91,7 +91,7 @@ You can see the menu tucked away to the left of the page now.
 I need to work through a number of things, but I'll do that gradually over the next while.
 
 * Fix broken syntax highlighting. I was using the (very good) Crayon syntax highlighter but that hasn't converted properly.
-* Fix broken pictures in some cases
+* Fix broken pictures - the images are still serving back to my CPANEL site...
 * Create a tag cloud - I liked that :-)
 * Create a sitemap XML
 * Check everything...
