@@ -86,15 +86,28 @@ duplicated the old home to an "[Posts Archive](/allposts.html/)" page.
 
 You can see the menu tucked away to the left of the page now.
 
+### Fixing syntax highlighting
+
+This just took a funky bit of sed, luckily:
+
+<pre>
+for x in *.markdown ; do egrep -inH 'crayon' $x ; done
+for x in *.markdown ; do sed -e 's/\[crayon lang="\([a-zA-Z0-9]*\)".*]$/```\1/' -i $x ; done
+for x in *.markdown ; do sed -e 's/\[crayon lang="\([a-zA-Z0-9]*\)"]/```\1\n/' -i $x ; done
+for x in *.markdown ; do sed  -e 's/\[\/crayon]/```/' -i $x ; done
+for x in *.markdown ; do sed -e 's/\[crayon highlight="false"]$/```/' -i $x ; done
+for x in *.markdown ; do sed -e 's/\[crayon lang="bash" wrap="true"]/```/' -i $x ; done
+for x in *.markdown ; do sed -e 's/\[crayon lang="bash" wrap="false"]/```/' -i $x ; done
+</pre>
+
 ### Things still to do
 
 I need to work through a number of things, but I'll do that gradually over the next while.
 
-* Fix broken syntax highlighting. I was using the (very good) Crayon syntax highlighter but that hasn't converted properly.
+* <strike>Fix broken syntax highlighting. I was using the (very good) Crayon syntax highlighter but that hasn't converted properly.<strike>
 * Fix broken pictures - the images are still serving back to my CPANEL site...
 * Create a tag cloud - I liked that :-)
 * Create a sitemap XML
-* Check everything...
 
 Missing features at this stage include tag cloud, month by month archive - probably wont bother,
 blogroll - probably wont bother, unless asked - I'll probably try and work out how to link back
