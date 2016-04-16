@@ -1,0 +1,85 @@
+diff -ur kernel-package-orig/ruleset/targets/common.mk kernel-package/ruleset/targets/common.mk
+--- kernel-package-orig/ruleset/targets/common.mk	2010-07-19 02:24:40.000000000 -0400
++++ kernel-package/ruleset/targets/common.mk	2011-08-07 14:50:37.000000000 -0400
+@@ -322,9 +322,16 @@
+ 			    $(CROSS_ARG) modules
+     endif
+   endif
+-  ifneq ($(strip $(shell grep -E ^[^\#]*CONFIG_LGUEST $(CONFIG_FILE))),)
++  ifeq ($(VERSION), 3)
++    ifneq ($(strip $(shell grep -E ^[^\#]*CONFIG_LGUEST $(CONFIG_FILE))),)
++	$(MAKE) $(do_parallel) $(EXTRAV_ARG) $(FLAV_ARG) ARCH=$(KERNEL_ARCH) \
++			    $(CROSS_ARG) -C Documentation/virtual/lguest
++    endif
++  else
++    ifneq ($(strip $(shell grep -E ^[^\#]*CONFIG_LGUEST $(CONFIG_FILE))),)
+ 	$(MAKE) $(do_parallel) $(EXTRAV_ARG) $(FLAV_ARG) ARCH=$(KERNEL_ARCH) \
+ 			    $(CROSS_ARG) -C Documentation/lguest
++    endif
+   endif
+ else
+   ifeq ($(DEB_HOST_ARCH_OS), kfreebsd)
+@@ -361,6 +368,9 @@
+ 	test ! -d Documentation/lguest  ||                   \
+             $(MAKE) $(FLAV_ARG) $(EXTRAV_ARG) $(CROSS_ARG)   \
+                ARCH=$(KERNEL_ARCH) -C Documentation/lguest clean
++	test ! -d Documentation/virtual/lguest  ||                   \
++            $(MAKE) $(FLAV_ARG) $(EXTRAV_ARG) $(CROSS_ARG)   \
++               ARCH=$(KERNEL_ARCH) -C Documentation/virtual/lguest clean
+ 	test ! -f Makefile || \
+ 	    $(MAKE) $(FLAV_ARG) $(EXTRAV_ARG) $(CROSS_ARG)    \
+                 ARCH=$(KERNEL_ARCH) distclean
+diff -ur kernel-package-orig/ruleset/targets/doc.mk kernel-package/ruleset/targets/doc.mk
+--- kernel-package-orig/ruleset/targets/doc.mk	2009-08-21 09:47:53.000000000 -0400
++++ kernel-package/ruleset/targets/doc.mk	2011-08-07 08:26:05.000000000 -0400
+@@ -59,6 +59,7 @@
+ endif
+ 	-tar cf - Documentation | (cd $(DOCDIR); umask 000; tar xsf -)
+ 	rm -f $(DOCDIR)/Documentation/lguest/lguest $(DOCDIR)/Documentation/lguest/lguest.lds
++	rm -f $(DOCDIR)/Documentation/virtual/lguest $(DOCDIR)/Documentation/virtual/lguest/lguest.lds
+ 	test ! -d $(DOCDIR)/Documentation/DocBook ||                            \
+ 	   rm -f   $(DOCDIR)/Documentation/DocBook/Makefile                     \
+ 	           $(DOCDIR)/Documentation/DocBook/*.sgml                       \
+@@ -75,7 +76,7 @@
+ ######################################################################
+ #### 
+ ######################################################################
+-ifneq ($(shell if [ $(VERSION) -ge 2 ] && [ $(PATCHLEVEL) -ge 5 ]; then \
++ifneq ($(shell if [ $(VERSION) -gt 2 ] || [ $(VERSION) -eq 2 ] && [ $(PATCHLEVEL) -ge 5 ]; then \
+ 	                  echo new;fi),)
+ 		find -name Kconfig -print0 | xargs -0r cat | \
+ 		     (umask 000 ; cat > $(DOCDIR)/Kconfig.collected)
+diff -ur kernel-package-orig/ruleset/targets/headers.mk kernel-package/ruleset/targets/headers.mk
+--- kernel-package-orig/ruleset/targets/headers.mk	2009-09-11 10:24:42.000000000 -0400
++++ kernel-package/ruleset/targets/headers.mk	2011-08-06 12:58:03.000000000 -0400
+@@ -31,7 +31,7 @@
+ ###############################################################################
+ 
+ LINK_ARCH=$(KERNEL_ARCH)
+-ifeq ($(shell if [ $(PATCHLEVEL) -eq 6 ] && [ $(SUBLEVEL) -gt 23 ] ; then \
++ifeq ($(shell if [ $(VERSION) -eq 2 ] && [ $(PATCHLEVEL) -eq 6 ] && [ $(SUBLEVEL) -gt 23 ] || [ $(VERSION) -gt 2 ] ; then \
+     if [ $(KERNEL_ARCH) = "i386" ] || [ $(KERNEL_ARCH) = "x86_64" ] ; then \
+ 		echo "yes" ; fi ; fi ),yes)
+ 	LINK_ARCH=x86
+diff -ur kernel-package-orig/ruleset/targets/image.mk kernel-package/ruleset/targets/image.mk
+--- kernel-package-orig/ruleset/targets/image.mk	2010-07-18 12:18:06.000000000 -0400
++++ kernel-package/ruleset/targets/image.mk	2011-08-07 21:25:09.000000000 -0400
+@@ -119,6 +119,8 @@
+       ifneq ($(strip ($CONFIG_LGUEST)),)
+ 	test ! -f Documentation/lguest/lguest ||			     \
+ 	    $(install_file) Documentation/lguest/lguest $(TMPTOP)/lib/modules/$(KERNELRELEASE)/lguest
++	test ! -f Documentation/virtual/lguest ||			     \
++	    $(install_file) Documentation/virtual/lguest/lguest $(TMPTOP)/lib/modules/$(KERNELRELEASE)/lguest
+ 	test ! -f $(TMPTOP)/lib/modules/$(KERNELRELEASE)/lguest ||		   \
+ 	    chmod 755 $(TMPTOP)/lib/modules/$(KERNELRELEASE)/lguest
+       endif
+@@ -338,6 +340,9 @@
+ 	test ! -d Documentation/lguest	||					\
+ 	   $(MAKE) $(EXTRAV_ARG) $(FLAV_ARG) $(CROSS_ARG) ARCH=$(KERNEL_ARCH)	\
+ 	       -C Documentation/lguest clean
++	test ! -d Documentation/virtual/lguest ||
++	   $(MAKE) $(EXTRAV_ARG) $(FLAV_ARG) $(CROSS_ARG) ARCH=$(KERNEL_ARCH)   \
++	       -C Documentation/virtual/lguest clean
+ 	rm -f stamp-$(package)
+ endif
+ 	@echo done > $@
