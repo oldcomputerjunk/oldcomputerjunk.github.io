@@ -312,11 +312,14 @@ a.sidebar-nav-item:focus {
   margin-bottom: 4em;
 }
 
+body { font-size: 18px; }
+
 /* Blog post or page title */
 .page-title,
 .post-title,
 .post-title a {
   color: #303030;
+  font-size: 1.5rem;
 }
 .page-title,
 .post-title {
