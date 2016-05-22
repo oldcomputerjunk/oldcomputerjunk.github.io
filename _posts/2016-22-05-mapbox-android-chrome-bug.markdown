@@ -10,7 +10,7 @@ tags:
 ---
 
 I've been working on a web app for a friend that includes geolocation functionality.
-I have been prototyping using the [mapbox-gs.js](https://www.mapbox.com/mapbox-gl-js/api) API, and combined with the [turf.js](http://turfjs.org) library and have managed to create a very functional client side application in good time.
+I have been prototyping using the [mapbox-gl.js](https://www.mapbox.com/mapbox-gl-js/api) API, and combined with the [turf.js](http://turfjs.org) library and have managed to create a very functional client side application in good time.
 I have been very impressed with how easy it is to create a map and overlay a variety of featues.
 
 Along the way I've had a refresher in Javascript, having come up to speed with HTML5 features and Promises, require.js and unit testing using [qunit](https://qunitjs.com). I am finding development very productive and much less frustrating with the diamond of death out of the way...
