@@ -27,6 +27,13 @@ Essentially, it seems that once you try and interact with the map, such as addin
 
 There is a [demo here](https://pastcompute.github.io/html5-demos/).
 
+Demo Working (on Firefox on Android)
+
+<img src="/public/2016-05-22_19.54.30.png" alt="Not Working on Chrome" class="inline"/>
+
+Demo Not Working (on Chrome on Android)
+
+<img src="/public/2016-05-22_19.54.21.png" alt="Working on Firefox" class="inline"/>
 
 This is happening on my Acer A1-810 running Android 4.2.2 and Chrome 52.0.2739.3 which appears to be the latest version.
 
@@ -36,5 +43,5 @@ One thing I noticed is a bunch of warnings in `adb`. Possibly this provides some
 [INFO:CONSOLE(0)] "[.Offscreen-For-WebGL-0x5f0de500]RENDER WARNING: there is no texture bound to the unit 1", source: http://X.X.X.X/~X/bugdemo.html
 ```
 
-I'll post an update when I make any further pgoress.
+I'll post an update if I make any further progress.
 
