@@ -23,7 +23,7 @@ Of course, the browser merry-go-round still exists even if it has been held at b
 
 I have struck a bug where the webGL part of mapbox seems to have some issues when run in Chrome on my Android tablet. Which is a bit annoying because the tablet is one of my main targets for this app.
 
-Essentially, it seems that once you try and interact with the map, such as adding features, or using two map instances on one page, the map will "blank out". Even doing nothing other than showing the map, and then attempting to finger drag causes the problem. This seems to be specific to the latest version of Chrome on Android; this demo works everywhere else I tried: Firefox (Linux, Windows, Android), Chrome (Linux, Windows), even IE (Windows)
+Essentially, it seems that once you try and interact with the map, such as adding features, or using two map instances on one page, the map will "blank out". Even doing nothing other than showing the map, and then attempting to finger drag causes the problem. This seems to be specific to the latest version of Chrome on Android; this demo works everywhere else I tried: Firefox (Linux, Windows, Android), Chrome (Linux, Windows), Safari (iPad) even IE (Windows)
 
 There is a [demo here](https://pastcompute.github.io/html5-demos/).
 
