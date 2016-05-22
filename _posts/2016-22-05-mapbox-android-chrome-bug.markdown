@@ -25,9 +25,8 @@ I have struck a bug where the webGL part of mapbox seems to have some issues whe
 
 Essentially, it seems that once you try and interact with the map, such as adding features, or using two map instances on one page, the map will "blank out". Even doing nothing other than showing the map, and then attempting to finger drag causes the problem. This seems to be specific to the latest version of Chrome on Android; this demo works everywhere else I tried: Firefox (Linux, Windows, Android), Chrome (Linux, Windows), even IE (Windows)
 
-There is a demo here:
+There is a [demo here](https://pastcompute.github.io/html5-demos/).
 
-https://pastcompute.github.io/html5-demos/
 
 This is happening on my Acer A1-810 running Android 4.2.2 and Chrome 52.0.2739.3 which appears to be the latest version.
 
@@ -36,3 +35,6 @@ One thing I noticed is a bunch of warnings in `adb`. Possibly this provides some
 ```
 [INFO:CONSOLE(0)] "[.Offscreen-For-WebGL-0x5f0de500]RENDER WARNING: there is no texture bound to the unit 1", source: http://X.X.X.X/~X/bugdemo.html
 ```
+
+I'll post an update when I make any further pgoress.
+
