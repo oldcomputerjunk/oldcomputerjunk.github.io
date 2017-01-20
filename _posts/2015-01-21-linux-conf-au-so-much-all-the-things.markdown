@@ -10,7 +10,7 @@ categories:
 - blog
 tags:
 - blog
-- lca2015
+- LCA2015
 - oops
 ---
 

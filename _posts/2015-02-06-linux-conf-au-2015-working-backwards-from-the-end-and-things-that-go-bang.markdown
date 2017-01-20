@@ -10,7 +10,7 @@ wordpress_id: 605
 categories:
 - realworld
 tags:
-- lca2015
+- LCA2015
 - noise
 - youtube
 ---
@@ -24,7 +24,7 @@ The next shot gives an idea of the scale of an assembled rocket:
 
 
 
-  
+
 
 ![Photograph rocket scale by Andrew Mc on 500px](https://drscdn.500px.org/photo/96480163/m=900/e91b011bf851987350090ae8adb208f0)
 
@@ -40,7 +40,7 @@ The rockets launch from the middle of a paddock.
 
 
 
-  
+
 
 ![Photograph distance away by Andrew Mc on 500px](https://drscdn.500px.org/photo/96476829/m=900/a33a37011fa8eb17870accf820b29061)
 
@@ -71,7 +71,7 @@ I believe the following rocket is known as the Pink Freak. My daughter loved the
 
 
 
-  
+
 
 ![Photograph thepinkfreak by Andrew Mc on 500px](https://drscdn.500px.org/photo/96475461/m=900/430f68f55765663aba5dbe1e11178bb6)
 
@@ -85,4 +85,3 @@ I believe the following rocket is known as the Pink Freak. My daughter loved the
 Alongside everything else, there was a quadcopter. When I first arrived, this was keeping a couple of the younger kids amused. But once the meet started moving, I realised it had a HD camera, and was used to monitor the rocket launches - and the pilot (this must be the right word!) had a VR headset, not an Occulus, but a new one I had not heard of, a SkyZone(?), to fly the thing way up and record the launch! It sounds like a mosquito in the videos.
 
 I had a lot of other photos and video but many had people and I haven't managed to make contact with the club to check if it is OK to post them, so for now I haven't.
-
