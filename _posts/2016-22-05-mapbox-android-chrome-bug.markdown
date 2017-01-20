@@ -6,7 +6,9 @@ date:   2016-05-22 01:00:00
 categories:
 - tech
 tags:
-- javascript html5 mapbox
+- javascript
+- html5
+- mapbox
 ---
 
 I've been working on a web app for a friend that includes geolocation functionality.
@@ -44,4 +46,3 @@ One thing I noticed is a bunch of warnings in `adb`. Possibly this provides some
 ```
 
 I'll post an update if I make any further progress.
-

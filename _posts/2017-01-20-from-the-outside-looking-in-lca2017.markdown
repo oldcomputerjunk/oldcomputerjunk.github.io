@@ -6,7 +6,8 @@ date:   2017-01-19 01:00:00
 categories:
 - realworld
 tags:
-- LCA2017 blog
+- LCA2017
+- blog
 ---
 
 # From the outside looking in (reflections on linux.conf.au)
@@ -41,4 +42,4 @@ Antarctica beckons...
 
 ### _Postscript_
 
-_I realised that the number of blog entries collapsed through last year. Oddly I also noticed that somehow I didn't blog at the previous LCA. Or I forgot to tag, I'm not sure and haven't checked. Anyway I'm going to try and maintain a rate of one per month for 2017. Mainly because this is a simple way to stay in practice at writing, no other reason. I don't expect too many people to be following any ramblings here..._
+_I realised that the number of blog entries I created, collapsed through last year. Oddly I also noticed that somehow I didn't blog at the previous LCA. Or I forgot to tag, I'm not sure and haven't checked. Anyway I'm going to try and maintain a rate of one per month for 2017. Mainly because this is a simple way to stay in practice at writing, no other reason. I don't expect too many people to be following any ramblings here..._

@@ -12,10 +12,20 @@
     categories:
     - tech
     tags:
-    - javascript html5 mapbox
+    - javascript
+    - html5
+    - mapbox
     ---
     ```
 
 4. Note that date might affect publishing...
-5. tags are space separated
-6. Push to github
+5. Push to github
+
+
+Links:
+
+https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/
+
+http://stackoverflow.com/questions/24098792/how-to-force-github-pages-build
+
+https://pages.github.com/
