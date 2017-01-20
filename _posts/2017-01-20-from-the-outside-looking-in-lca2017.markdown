@@ -1,15 +1,15 @@
 ---
 layout: post
-slug: mapbox-android-chrome-bug
-title:  "Mapbox on Chrome on Android"
-date:   2016-05-22 01:00:00
+slug: from-the-outside-looking-in-lca2017
+title:  "From the outside looking in"
+date:   2017-01-19 01:00:00
 categories:
 - realworld
 tags:
 - LCA2017 blog
 ---
 
-# From the outside looking in
+# From the outside looking in (reflections on linux.conf.au)
 
 I haven’t blogged for a while. Things have been busy, tiring. Events have transpired. Hopefully I will be creating new things in 2017 but there has been a lot of zig-zagging along the way. And across the new year break family has taken precedence. This is reflected in my github profile - for me opportunities to contribute to open source were scarce across 2016.
 
