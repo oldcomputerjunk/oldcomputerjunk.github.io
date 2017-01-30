@@ -63,12 +63,15 @@ Luckily it turns out that 6143 bytes corresponds to exactly 8KB of functional me
 
 _to be continued_
 
-[^1]: (http://www.thingiverse.com/thing:1561848)
+---
 
-[^2]: (http://www.azog.org/?p=862)
+[^1]: [http://www.thingiverse.com/thing:1561848](http://www.thingiverse.com/thing:1561848)
 
-[^3]: (https://imgur.com/a/VP0Mm)
+[^2]: [http://www.azog.org/?p=862](http://www.azog.org/?p=862)
 
-[^4]: (http://www.lemon64.com/forum/viewtopic.php?p=668304)
+[^3]: [https://imgur.com/a/VP0Mm](https://imgur.com/a/VP0Mm)
 
-[^5]: (http://www.lemon64.com/forum/viewtopic.php?p=502109)
+[^4]: [http://www.lemon64.com/forum/viewtopic.php?p=668304](http://www.lemon64.com/forum/viewtopic.php?p=668304)
+
+
+[^5]: [http://www.lemon64.com/forum/viewtopic.php?p=502109](http://www.lemon64.com/forum/viewtopic.php?p=502109)
