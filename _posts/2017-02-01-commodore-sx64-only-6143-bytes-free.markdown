@@ -10,8 +10,6 @@ tags:
 - commodore-64
 ---
 
-# My Commodore SX64 has only 6143 bytes free
-
 ![6143 bytes free screenshot](/public/sx64-k1.jpg)
 
 Quite a number of years ago I managed to aquire a [Commodore SX64](https://en.wikipedia.org/wiki/Commodore_SX-64) for the round sum of $10.
@@ -28,9 +26,9 @@ environment ever since. I have recently had it out to assess its condition, as I
 The first thing I discovered after powering on was that the keyboard was mostly not working. The keyboard is essentially
 the same layout as a normal C64, but is
 designed to fit snugly in the front area of the case, acting as protection for the screen when in transit. The
-keyboard is connected via a ubiquitious D25 connector, the keyboard cable having a presumably custom shell. (Whilst researching I found plans on [Thingiverse](http://www.thingiverse.com/thing:1561848) [^1] so presumably these break for some people.)
+keyboard is connected via a ubiquitious D25 connector, the keyboard cable having a presumably custom shell. (Whilst researching I found plans on [Thingiverse](http://www.thingiverse.com/thing:1561848)[^1] so presumably these break for some people.)
 
-Luckily there were a [few](http://www.azog.org/?p=862) [^2] [tutorials](https://imgur.com/a/VP0Mm) [^3] around on how to deal with the failing keyboard, it seems
+Luckily there were a [few](http://www.azog.org/?p=862)[^2] [tutorials](https://imgur.com/a/VP0Mm)[^3] around on how to deal with the failing keyboard, it seems
 the most likely culprint was simply age and could be fixed with a good clean. I spent a couple of hours
 disassembling the keyboard and applying isopropyl alcohol with some cotton buds, and this was sufficient to
 return the keyboard to full functionality. The construction is of a spring activated key buttons and a carbon-paper like membrane, which I took extra care when dealing with as it would likely be impossible to find a
@@ -61,16 +59,16 @@ corrupted graphics. It was during this testing that I noticed that there was onl
 THe go-to fault of course is a problem with the memory chips. This would be annoying, because although straightforward enough, at this point I really dont feel like desoldering, socketing and testing
 8 4164 RAM chips, and finding a replacement for any that have failed.
 
-Luckily it turns out that 6143 bytes corresponds to exactly 8KB of functional memory, and [^4] this [^5] may actually be an addressing issue and not a failed RAM chip - in the best case a problem with either the address circuit lines or 74-series switching logic (good, because parts easily sourced) or if I'm  _unlucky_ it will be the addressing PLA :tired_face:
+Luckily it turns out that 6143 bytes corresponds to exactly 8KB of functional memory, and[^4] this[^5] may actually be an addressing issue and not a failed RAM chip - in the best case a problem with either the address circuit lines or 74-series switching logic (good, because parts easily sourced) or if I'm  _unlucky_ it will be the addressing PLA :tired_face:
 
 _to be continued_
 
-[^1]: http://www.thingiverse.com/thing:1561848
+[^1]: (http://www.thingiverse.com/thing:1561848)
 
-[^2]: http://www.azog.org/?p=862
+[^2]: (http://www.azog.org/?p=862)
 
-[^3]: https://imgur.com/a/VP0Mm
+[^3]: (https://imgur.com/a/VP0Mm)
 
-[^4]: http://www.lemon64.com/forum/viewtopic.php?p=668304
+[^4]: (http://www.lemon64.com/forum/viewtopic.php?p=668304)
 
-[^5]: http://www.lemon64.com/forum/viewtopic.php?p=502109
+[^5]: (http://www.lemon64.com/forum/viewtopic.php?p=502109)
