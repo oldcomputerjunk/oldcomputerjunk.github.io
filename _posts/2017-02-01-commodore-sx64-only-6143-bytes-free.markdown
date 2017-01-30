@@ -17,7 +17,7 @@ tags:
 Quite a number of years ago I managed to aquire a [Commodore SX64](https://en.wikipedia.org/wiki/Commodore_SX-64) for the round sum of $10.
 For the uninitiated a Commodore SX64 is a portable version of the hugely popular [Commodore 64](https://en.wikipedia.org/wiki/Commodore_64). It features a built-in version of the 1541 5.25" floppy disk drive, a 5" full colour CRT screen and all the normal Commodore 64 peripheral ports, with the exception of lacking analogue inputs on the joystick ports. It weights about 15 KG.
 
-Finding one for $10 was quite lucky, even in the early 2000s when I stumbled across this at a garage sale. These computers were manufactured from 1984 to 1986 and are quite rare, and although I have no record of it I suspect even then were selling for three figures on ebay. More recently (in about 2013-ish I think) one sold for around $400 elsewhere in my state. TBH I dont think there would be too many more down here.
+Finding one for $10 was quite lucky, even in the early 2000s when I stumbled across this at a garage sale. These computers were manufactured from 1984 to 1986 and is quite novel, as a luggable system, and reasonably rare compared with the C64 and Vic20, and although I have no record of it I suspect even then were selling for three figures on ebay. More recently (in about 2013-ish I think) one sold for around $400 roughly in my area. TBH I dont think there would be too many more around here.
 
 <img src="/public/sx64-k0.jpg" alt="Commodore SX64" class="inline"/>
 
@@ -55,15 +55,13 @@ After all this I was able to start the search for a floppy disk to test the syst
 - Second problem: of several disk I tried, only one managed to play a game.
 
 Now of course,
-the odds of at least one or most of the 30+ year old floppies failing were quite high, but it seemed that
-many would actually start to load and then either hang in the game fast loader, or run with
+the odds of at least one or most of the 30+ year old floppies failing were quite high, but it
+many would actually start to load, and then either hang in the game fast loader, or run with
 corrupted graphics. It was during this testing that I noticed that there was only 6143 bytes free and not the expected 38911 :fearful:
 
-Now, I was really really hoping, but without rational basis, that this was not a RAM failure.
-Although straightforward enough, at this point I really dont feel like desoldering and socketing
-8 4164 RAM chips, let alone finding a 9th+ to use as a test to fix the memory.
+THe go-to fault of course is a problem with the memory chips. This would be annoying, because although straightforward enough, at this point I really dont feel like desoldering, socketing and testing
+8 4164 RAM chips, and finding a replacement for any that have failed.
 
-Luckily it [seems](http://www.lemon64.com/forum/viewtopic.php?p=668304) [that](www.lemon64.com/forum/viewtopic.php?p=502109) 6143 bytes corresponds to exactly 8KB of functional memory. Due to how the chips are arranged this means
-it is less likely to be a failed RAM chip and more likely to be the bank selection logic. At least, lets hope so... If I'm really _unlucky_ it will be the PAL :tired_face:
+Luckily it turns out that 6143 bytes corresponds to exactly 8KB of functional memory, and this [(link)](http://www.lemon64.com/forum/viewtopic.php?p=668304)   [(link)](http://www.lemon64.com/forum/viewtopic.php?p=502109) may actually be an addressing issue and not a failed RAM chip - in the best case a problem with either the address circuit lines or 74-series switching logic (good, because parts easily sourced) or if I'm  _unlucky_ it will be the addressing PLA :tired_face:
 
 _to be continued_
