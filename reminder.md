@@ -29,3 +29,7 @@ https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-gi
 http://stackoverflow.com/questions/24098792/how-to-force-github-pages-build
 
 https://pages.github.com/
+
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables
+
+https://gist.github.com/clintel/1155906/71b2ab2e4444cb826b45f9988d067d1dd1edcc2c
