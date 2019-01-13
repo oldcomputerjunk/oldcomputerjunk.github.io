@@ -18,6 +18,8 @@ Out of the box, Angular 7 disappointed me significantly for the first time, by n
 
 ~ [Jump ahead to the solution](#Solution) or the [recap](#Recap)~
 
+[![Selective Karma unit tests passing](http://blog.oldcomputerjunk.net/images/karma-screenshot-1.png)](http://blog.oldcomputerjunk.net/images/karma-screenshot-1.png)
+
 ---
 
 _Yes, I'm using [Ionic4](https://beta.ionicframework.com/docs/) for essentially production code. In spite of still being in [beta](https://blog.ionicframework.com/announcing-ionic-4-beta/) it has just been so much a smoother epxerience with the build tools, possibly because they haven't completely obfuscated the whole process and instead call the ng tools directly. Admittedly, the first cab of the rank is actually a SPA webapp, but I have been impressed so far._
