@@ -12,9 +12,9 @@ tags:
 - webpack
 ---
 
-Today with an Angular 7 / Ionic 4 project I was updating some unit tests, and this particular project I had been reasonably  self-disciplined about actually building out  unit test coverage. However the downside is that more tests take longers to compile, and run. This starts to get tedious when you only want to re-run a small number during development.
+Today with an Angular 7 / Ionic 4 project I was updating some unit tests, and this particular project I had been reasonably  self-disciplined about actually building out  unit test coverage. However the downside is that more tests take longer to compile, and run. This starts to get tedious when you only want to re-run a small number during development.
 
-Out of the box, Angular 7 disappointed me for the first time since using it by not providing a way to run individual unit tests from the cli. The solution involves a third party plugin, customising `angular.json` and Webpack and `test.ts`.
+Out of the box, Angular 7 disappointed me significantly for the first time, by not providing a way to run individual unit tests from the cli. The solution involves leveraging a third party plugin, customising `angular.json` and Webpack and `test.ts`.
 
 ~ [Jump ahead to the solution](#Solution) or the [recap](#Recap)~
 
