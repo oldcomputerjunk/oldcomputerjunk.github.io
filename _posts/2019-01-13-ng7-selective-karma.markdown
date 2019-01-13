@@ -36,13 +36,13 @@ So, I was a bit surprised when I discovered that out of the box you can't easily
 
 ---
 
-Now, it is ([or was](https://stackoverflow.com/a/31598188/2772465)?) [easy enough](https://medium.com/@bebraw/running-individual-tests-with-karma-mocha-89aece8ba18b) to run a [single test with Karma](https://stackoverflow.com/a/29151264/2772465), but this functionality [appears not to have been exposed through by Angular](https://stackoverflow.com/questions/40683673/how-to-execute-only-one-test-spec-with-angular-cli) [^1] [^9] and I couldn't find anything in the Angular doco. The trick with a plain Karma project has been to use the environment [or command line](https://stackoverflow.com/a/29151264) [^6] to specify a filter, which is then used to modify the webpack configuration for Karma. Angular 6+ significantly changed how webpack is used, this seems to have [broken](https://github.com/angular/angular-cli/issues/9949) a lot of [peoples work flows](https://github.com/angular/angular-cli/issues/10670). [^2] [^3] In end I think actually the mechanisms are OK, just not obviously documented how to customise, and it does rely on a third party Angular builder; but in the process this makes it impossible to use the usual Karma tricks as well.
+Now, it is ([or was](https://stackoverflow.com/a/31598188/2772465)?) [easy enough](https://medium.com/@bebraw/running-individual-tests-with-karma-mocha-89aece8ba18b) to run a [single test with Karma](https://stackoverflow.com/a/29151264/2772465), but this functionality [appears not to have been exposed through by Angular](https://stackoverflow.com/questions/40683673/how-to-execute-only-one-test-spec-with-angular-cli)  and I couldn't find anything in the Angular doco. The trick with a plain Karma project has been to use the environment [or command line](https://stackoverflow.com/a/29151264)  to specify a filter, which is then used to modify the webpack configuration for Karma. Angular 6+ significantly changed how webpack is used, this seems to have [broken](https://github.com/angular/angular-cli/issues/9949) a lot of [peoples work flows](https://github.com/angular/angular-cli/issues/10670).  In end I think actually the mechanisms are OK, just not obviously documented how to customise, and it does rely on a third party Angular builder; but in the process this makes it impossible to use the usual Karma tricks as well. [^1] [^2] [^3] [^6] [^9]
 
 After some digging, it turns out there are github [issues](https://github.com/angular/angular-cli/issues/9026) that don't really help; I don't understand why such a fundamental feature such as running single unit test has been ignored. After all, after using it for a while the whole Angular 7 build system seems so much better than what I was dealing with for Ionic3.
 
-The [commonly proposed](https://stackoverflow.com/a/40683791) [^4] but logistically inferior sugestion is to use the 'f' or 'x' prefixes of Jasmine.  For example, if Karma finds a test implemented using the [fdescribe](https://jasmine.github.io/api/2.8/global.html#fdescribe) function instead of `describe()`, where f stands for 'focus', then the other non-f tests are ignored. 'x' or `xdescribe()` is the reverse, meaning skip the test. **_This is fine as a temporary fix, but you don't wan't to commit it to git, or forget it was there or you end up with forgotten tests._**
+The [commonly proposed](https://stackoverflow.com/a/40683791) but logistically inferior sugestion is to use the 'f' or 'x' prefixes of Jasmine.  For example, if Karma finds a test implemented using the [fdescribe](https://jasmine.github.io/api/2.8/global.html#fdescribe) function instead of `describe()`, where f stands for 'focus', then the other non-f tests are ignored. 'x' or `xdescribe()` is the reverse, meaning skip the test. **_This is fine as a temporary fix, but you don't wan't to commit it to git, or forget it was there or you end up with forgotten tests._** [^4]
 
-Ultimately a proposed [solution](https://github.com/angular/angular-cli/issues/9026#issuecomment-354475734) [^8] that helped me find a way forward was to edit the `test.ts` file. [This is one of those obvious-in-hindsight things that makes it hard to google for](https://stackoverflow.com/a/50636750) [^5] By itself this is just as non-useful as the advice to use `fdescribe` ; however, along with some webpack magic I was able to come up with a sane solution.
+Ultimately a proposed [solution](https://github.com/angular/angular-cli/issues/9026#issuecomment-354475734) that helped me find a way forward was to edit the `test.ts` file. [This is one of those obvious-in-hindsight things that makes it hard to google for](https://stackoverflow.com/a/50636750) By itself this is just as non-useful as the advice to use `fdescribe` ; however, along with some webpack magic I was able to come up with a sane solution. [^5] [^8]
 
 ## Solution
 
@@ -75,8 +75,8 @@ The approach is to use a simple Webpack plugin, and modify the webpack, as per t
 This substitution then changes `test.ts` to:
 
 ```
-declare const KARMA_FILTER: any;
-const context = require.context('./', true, KARMA_FILTER);
+declare const KARMA_SPEC_FILTER: any;
+const context = require.context('./', true, KARMA_SPEC_FILTER);
 ```
 
 **_(Note that when using Webpack to substitute text, it goes in verbatim)_**
@@ -85,7 +85,7 @@ and we might edit the karma configuration file `karma.conf.js` to add the Webpac
 ```
 module.exports = function (config) {
   webpackConfig.plugins = (webpackConfig.plugins || []).concat(
-    new webpack.DefinePlugin({KARMA_FILTER: 'something.*\.spec\.ts$'}));
+    new webpack.DefinePlugin({KARMA_SPEC_FILTER: 'something.*\.spec\.ts$'}));
 
   ...rest of config is here...
 ```
@@ -93,9 +93,8 @@ module.exports = function (config) {
 **_However, there is no way out of the box to hook this into Angular 7._**
 
 
-Eventually I [stumbled over](https://stackoverflow.com/questions/51068908/angular-cli-6-custom-webpack-config) [^7] `@angular-builders/custom-webpack`
-
-This wraps the default angular builder and lets you merge a webpack configuration. Install using `npm install --save-dev @angular-builders/custom-webpack`, and then edit `angular.json` as follows.
+Eventually I [stumbled over](https://stackoverflow.com/questions/51068908/angular-cli-6-custom-webpack-config) `@angular-builders/custom-webpack`.
+This wraps the default angular builder and lets you merge a webpack configuration. Install using `npm install --save-dev @angular-builders/custom-webpack`, and then edit `angular.json` as follows. [^7]
 
 ```
   "projects": {
@@ -118,24 +117,24 @@ This wraps the default angular builder and lets you merge a webpack configuratio
             "preserveSymlinks": true,
 ```
 
-Here, builder (for Ionic 4) defaulted to `@angular-devkit/build-angular:browser` and has been changed to the custom webpack builder. Then specify the configuration file to merge into webpack, i.e. `customWebpackConfig`
+Here, builder (for Ionic 4) previously was to `@angular-devkit/build-angular:browser` and has been changed to the custom webpack builder. Then specify the configuration file to merge into webpack, i.e. `customWebpackConfig`
 
 Finally, the new file `src/app-extra-webpack.config.js` has the relevant part of webpack:
 
 ```
 const FILTER = process.env.KARMA_FILTER;
-let KARMA_FILTER = '/.spec.ts$/';
+let KARMA_SPEC_FILTER = '/.spec.ts$/';
 if (FILTER) {
-  KARMA_CONTEXT_SPEC = `/${FILTER}.spec.ts$/`;
+  KARMA_SPEC_FILTER = `/${FILTER}.spec.ts$/`;
 }
 module.exports = {
-  plugins: [new webpack.DefinePlugin({KARMA_CONTEXT_SPEC})]
+  plugins: [new webpack.DefinePlugin({KARMA_SPEC_FILTER})]
 }
 ```
 
 Putting it altogether now means we can run:
 ```
-FILTER='somefile-.*\.spec\.ts$' npm run test
+KARMA_FILTER='somefile-.*\.spec\.ts$' npm run test
 ```
 
 and voila, we get our selective test execution.
@@ -150,7 +149,7 @@ To allow control of Angular 7 Karma unit test selection from the command line - 
 4. Modify `angular.json` to use the custom webpack configuration
 5. Profit !!!
 ```
-FILTER='somefile-.*\.spec\.ts$' npm run test
+KARMA_FILTER='somefile-.*\.spec\.ts$' npm run test
 ```
 
 ---
@@ -171,7 +170,6 @@ FILTER='somefile-.*\.spec\.ts$' npm run test
 
 [^8]: [https://github.com/angular/angular-cli/issues/9026#issuecomment-354475734](https://github.com/angular/angular-cli/issues/9026#issuecomment-354475734)
 
-[^9]: [https://stackoverflow.com/questions/50333461/karmawebpackmocha-running-single-tests](https://stackoverflow.com/questions/50333461/karmawebpackmocha-running-single-tests
-)
+[^9]: [https://stackoverflow.com/questions/50333461/karmawebpackmocha-running-single-tests](https://stackoverflow.com/questions/50333461/karmawebpackmocha-running-single-tests)
 
 
