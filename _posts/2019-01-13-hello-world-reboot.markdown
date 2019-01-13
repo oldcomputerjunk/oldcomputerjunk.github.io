@@ -11,7 +11,7 @@ tags:
 - mapbox
 ---
 
-Oops. It looks like almost two years have passed. I guess I've been a bit focussed on a particular project, and dealing with life things. Along the way I've had to learn rather a lot about Ionic, and Angular, and typescript, and AWS, and Google Firebase, and Android, and iOD and Geoserver and ... and if I can be a little disciplined I can catch some of that here going forward.
+Oops. It looks like almost two years have passed. I guess I've been a bit focussed on a particular project, and dealing with life things. Along the way I've had to learn rather a lot about Ionic, and Angular, and typescript, and AWS, and Google Firebase, and Android, and iOS and Geoserver and ... and if I can be a little disciplined I can catch some of that here going forward.
 
 And I did manage to restore that [SX64](https://blog.oldcomputerjunk.net/2017/commodore-sx64-only-6143-byes-free/).
 
