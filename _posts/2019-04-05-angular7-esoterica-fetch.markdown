@@ -63,10 +63,10 @@ This seemed at odds with the comment, so I fell down another rabbit hole and end
 ```
 
 See:
-- (https://github.com/angular/angular-cli/blob/9aefe8371c9b1d4f3314f950c4e52df4231c3545/packages/schematics/angular/application/files/src/polyfills.ts.template#L31)
-- (https://github.com/angular/angular-cli/commit/c83be5e555dbad53ad445ef0c3cacaf4ac5730dc)
+- [Line 31 of schematics - polyfills.ts.template](https://github.com/angular/angular-cli/blob/9aefe8371c9b1d4f3314f950c4e52df4231c3545/packages/schematics/angular/application/files/src/polyfills.ts.template#L31)
+- [Angular CLI commit c83be5e555dbad53ad445ef0c3cacaf4ac5730dc](https://github.com/angular/angular-cli/commit/c83be5e555dbad53ad445ef0c3cacaf4ac5730dc)
 
-After this, I discovered a bug report about the problem I'd found: (https://github.com/angular/angular-cli/issues/12886)
+After this, I discovered a bug report about the problem I'd found: [Angular CLI issue #12286](https://github.com/angular/angular-cli/issues/12886)
 
 Of course, the project I was working with was first scaffolded some time ago, and since then others had been down my path and updated the documentation, as per the above links. Of course, because the comment is in a scaffolded file, simply having the latest version pulled down by npm cannot update those files which are source code in an existing project.
 
