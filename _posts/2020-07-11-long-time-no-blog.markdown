@@ -98,3 +98,7 @@ Failed again! Time to rip things out and divide and conquer.
 I started by copying another article, editing the metadata then adding text.
 
 I had added a tag `2020` so first change that to `wtf2020` maybe it doesnt like tags with a number ... 🕟 ...
+
+Now it works.
+
+Moral of the story: `_config.yml` tags cannot start with a number. Who wudda thunk it?
