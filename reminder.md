@@ -35,5 +35,3 @@ Links:
 [https://gist.github.com/clintel/1155906/71b2ab2e4444cb826b45f9988d067d1dd1edcc2c]()
 
 Emoji: [https://gist.github.com/roachhd/1f029bd4b50b8a524f3c]() and [https://gist.github.com/rxaviers/7360908]()
-
-

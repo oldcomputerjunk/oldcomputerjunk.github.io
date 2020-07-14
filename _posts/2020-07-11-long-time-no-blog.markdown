@@ -87,3 +87,8 @@ There are a whole bunch of other troubleshooting tips, but couple to an error me
 
 As a last resort, I revert back to the last successful commit by branching off my new work and then reverting. Go git push...
 
+Well, this time the build worked. So something is broken in this blog entry.
+
+First, in this same update I fixed some broken formatting in [/reminder/](). So lets merge that back to master and try again ... 🕟 ... well, that worked.
+
+So what is wrong with my new article? Only thing obvious is the filename - I have the date transposed, so fix that, but that should not be it - the filename is really arbitrary only used for sorting, the date comes from the blog entry YAML metadata header. Well, try again ... 🕟 ...
