@@ -190,7 +190,7 @@ Lets do a quick UDP scan. Not really quick, because it takes a few seconds for a
 nmap -p1-65535 -v -sU -Pn 169.254.16.84
 ```
 
-Eventually, after 15 minutes -
+Eventually, after 30 minutes -
 
 
 
