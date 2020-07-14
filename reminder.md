@@ -22,6 +22,10 @@
 5. For convention `article` in the filename should match the value of `slug` in the YAML
 6. Push to github
 
+*WARNING*
+
+> Do not start tags with a number. It fails, and you don't even get a useful error message...!
+
 Links:
 
 [https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/]()
