@@ -6,7 +6,7 @@ date:   2020-07-11 01:00:00
 categories:
 - blog
 tags:
-- 2020
+- wtf2020
 - github
 - blog
 ---
@@ -92,3 +92,9 @@ Well, this time the build worked. So something is broken in this blog entry.
 First, in this same update I fixed some broken formatting in [/reminder/](). So lets merge that back to master and try again ... 🕟 ... well, that worked.
 
 So what is wrong with my new article? Only thing obvious is the filename - I have the date transposed, so fix that, but that should not be it - the filename is really arbitrary only used for sorting, the date comes from the blog entry YAML metadata header. Well, try again ... 🕟 ...
+
+Failed again! Time to rip things out and divide and conquer.
+
+I started by copying another article, editing the metadata then adding text.
+
+I had added a tag `2020` so first change that to `wtf2020` maybe it doesnt like tags with a number ... 🕟 ...
