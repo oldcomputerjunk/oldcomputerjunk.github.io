@@ -2,7 +2,7 @@
 layout: post
 slug: hacking-bluray-players-just-for-fun-1
 title:  "Hacking BluRay players just for fun - part 1"
-date:   2012-07-13 01:00:00
+date:   2020-07-13 01:00:00
 categories:
 - infosec
 tags:
