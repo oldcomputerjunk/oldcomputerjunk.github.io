@@ -308,10 +308,6 @@ They even left tcpdump on it.
 
 I think there is a lot of potential _if_ I can find a way to a shell.
 
-## Open Port Analysis
-
-Given 9222 is chromecast, lets see whats on the other two apparent HTTP servers.
-
 ## Security testing (safe for use)
 
 Purpose of this is to check it doesnt phone home, or if it does what to block on my network. They don't need to know when I'm watching a DVD thats my business.
