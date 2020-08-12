@@ -55,7 +55,7 @@ Xiaomi M1901F7G specs:
 Some interesting observations:
 - Xiaomi actually have direct downloads for offical ROM images, which is quite good of them
 - this phone has an accessible bootloader (after some online fun and games)
-- the one from Kogan appears to be an "international" version, it came with and English + Indonesian quick start guide
+- the one from Kogan appears to be an "international" version, it came with an English + Indonesian quick start guide
 
 # Unlocking the bootloader / OPSEC practice
 
@@ -84,9 +84,9 @@ From the phone
 
 Screens:
 
-<img src="/images/miunlock1.jpeg" alt="Screenshot of Mi Unlock (upper screen 1)" class="inline"/>
-<img src="/images/miunlock2.jpeg" alt="Screenshot of Mi Unlock (lower screen 1)" class="inline"/>
-<img src="/images/miunlock3.jpeg" alt="Screenshot of Mi Unlock (screen 2)" class="inline"/>
+<img src="/images/miunlock1.jpeg" alt="Screenshot of Mi Unlock (upper screen 1)" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock2.jpeg" alt="Screenshot of Mi Unlock (lower screen 1)" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock3.jpeg" alt="Screenshot of Mi Unlock (screen 2)" class="inline" width="50%" height="50%"/>
 
 From the PC ( Windows 10 virtual machine)
 
@@ -95,30 +95,30 @@ From the PC ( Windows 10 virtual machine)
 - This popped up a big disclaimer, then a wizard
 - From settings, press Check Driver to ensure this is up to date
 
-<img src="/images/miunlock4.png" alt="Screenshot of Mi Unlock Windows App (disclaimer)" class="inline"/>
-<img src="/images/miunlock5.png" alt="Screenshot of Mi Unlock Windows App (wizard)" class="inline"/>
+<img src="/images/miunlock4.png" alt="Screenshot of Mi Unlock Windows App (disclaimer)" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock5.png" alt="Screenshot of Mi Unlock Windows App (wizard)" class="inline" width="50%" height="50%"/>
 
 - Now plug in the phone, and reboot into fastboot by holding down settings and the power button together
 - ensure VirtualBox USB passthrough is enabled, and with the phone plugged in select the "Google Android 0100" device in the VirtualBox USB settings
 - The Windows app will detect this
 - After this, you are presented with a screen with an Unlock button and instructions
 
-<img src="/images/miunlock6.png" alt="Fastboot" class="inline"/>
-<img src="/images/miunlock7.png" alt="Screenshot of Mi Unlock Windows App (installing drivers)" class="inline"/>
-<img src="/images/miunlock8.png" alt="Screenshot of Mi Unlock Windows App (connected)" class="inline"/>
+<img src="/images/miunlock6.png" alt="Fastboot" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock7.png" alt="Screenshot of Mi Unlock Windows App (installing drivers)" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock8.png" alt="Screenshot of Mi Unlock Windows App (connected)" class="inline" width="50%" height="50%"/>
 
 - After pressing Unlock, there is a confirmation box, followed by a big scary security warning.
 - It says "An unlocked device is an easy target for malware which may damage your device or cause financial loss."
 - Of course, this is correct, but this is a risk I will accept and instead take suitable mitigations, including only installing a minimal set of apps, updating regularly, and also making sure I regularly update the base operating system.  In practice if I don't root the phone, an unlocked boot loader is probably (*I hope*, need to do more research!) no more susceptible to malware anyway unless an adversary has physical access to to phone via USB connection to a PC...
 
-<img src="/images/miunlock9.png" alt="Unlock confirmation" class="inline"/>
-<img src="/images/miunlock10.png" alt="Scary security warning" class="inline"/>
+<img src="/images/miunlock9.png" alt="Unlock confirmation" class="inline" width="50%" height="50%"/>
+<img src="/images/miunlock10.png" alt="Scary security warning" class="inline" width="50%" height="50%"/>
 
 - at this point, after the process completes, hold down Power and Volume Down with the cable unplugged
 - this will boot into fastboot again - note this is a bit trick, wait about two seconds after power on vibrate before letting go
 - the Windows app will confirm the successful procedure, then reboot the phone again
 
-<img src="/images/miunlock11.png" alt="Completed" class="inline"/>
+<img src="/images/miunlock11.png" alt="Completed" class="inline" width="50%" height="50%"/>
 
 - at this point you will need to progress through the phone user setup again, far enough to go into settings and re-enable developer USB mode again
 - we can now use the Android _fastload_ tool to install a new bootloader, TWRP, which we can then use to install LineageOS
