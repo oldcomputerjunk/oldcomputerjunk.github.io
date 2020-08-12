@@ -1,7 +1,7 @@
 ---
 layout: post
 slug: lineageos-on-redmi7
-title:  "Installing LineageOS on a cheap midrange phone"
+title:  "Installing LineageOS on a cheap midrange phone (part 1 - bootloader unlock)"
 date:   2020-08-07 01:00:00
 categories:
 - android
@@ -11,15 +11,17 @@ tags:
 - hacking
 ---
 
+_(Yes, this is another part one - writing up this stuff from my notes takes time, and sometimes you need to just finally ship...)_
+
 I needed a new phone, my Samsung had a cracked screen for a while, which I could tolerate, and much worse the micro USB charge connector was failing. Micro USB always seems to be so poorly implemented on so many phones.  Also, the Samsung software seemed to get crappier every time there was an update that "improved functionality"
 
 So I did a bit of research, and decided to buy a new phone that I could replace the manufacturer Android with LineageOS, an open source Android distribution based on the Android Open Source Project (AOSP)
 
 My use case is I prefer to use my phone mostly as a phone, many mobile tasks like video calls or docs I prefer to use a tablet for instead. I don't install games, or random apps, or Facebook or Twitter on my phone. Essentially all I use are:
 - calls, SMS, calculator, alarm clock, calendar
-- email (not Gmail, and only a subset of my email)
-- DuckDuckGo & Firefox
-- Google Maps (I havent managed to de-google this yet, but I don't use maps a lot anyway)
+- email (not with the Gmail app)
+- DuckDuckGo browser
+- Google maps
 - VLC (music, podcasts)
 - The CISSP ISC(2) official practice exams
 
@@ -30,18 +32,19 @@ Benefits:
 - private - no vendor bloatware and I can control which google-ware I can install
 
 Cons:
-- security (risk) - no vendor updates of the base image - so I need to keep on top of that myself
+
+- security (risk) - no vendor updates of the base image - so I need to keep on top of that myself!
 - need to find a late-enough model phone with decent specs that I can buy here in Australia that is currently officially supported by LineageOS
 
-Some people run LineageOS native, or you can instead install OpenGapps, a packaging of the google app suite (e.g. Play Store) in a minimal configuration so you can control which google apps you use (and get to avoid, or install and them _remove_ using Play, not normally possible). I chose to build my own and install it.
+Some people run LineageOS native, or you can instead install OpenGapps, a packaging of the google app suite (e.g. Play Store) in a minimal configuration so you can control which google apps you use (and get to avoid, or install and them _remove_ using Play, not normally possible). I chose to build my own Gapps and install it, because there is no signing key verification that can be done on the phone when installed, so for the exercise I should at least be able to trust myself...
 
-Note: vendor bloatware, the dozens of Samsung or Xiaomi or Lenovo or whatever apps that come with the phone, that often differ enough from the original Android or Google version enough to be annoying, through to wanting to throw the phone through a window. Case in point: Samsung notes - I cant easily export them or sync them with anything!
+Note: vendor bloatware == the dozens of Samsung or Xiaomi or Lenovo or whatever apps that come with the phone, that often differ enough from the original Android or Google version enough to be annoying, through to wanting to throw the phone through a window. Case in point: Samsung notes - I cant easily export them or sync them with anything!
 
 # Phone Specs
 
-In the end I settled on a Xiaomi Redmi Note 7. It has FIXME cores and 64GB storage and comes with a spin of Android called MIUI, which I never actually bothered to try out because I intentionally installed LineageOS before I even started using as a phone.  I purchased this from Kogan for $239 - I would have preferred to walk into a shop in Adelaide but everywhere only had slightly newer model phones that were not yet on the officially supported list for LineageOS. Now I could have attempted to add my own support, I'm sure it would be an interesting project but I have too many interesting projects to consume my time as it is and I really just wanted a phone. I probably would have preferred a Redmi Note 7 Pro, which is supported also by /e/os a redistribution of LineageOS with a more privacy focus, but I couldn't find one to easily buy.
+In the end I settled on a Xiaomi Redmi Note 7. It has sufficient cores and RAM and 64GB storage and comes with a spin-off Android called MIUI, which I never actually bothered to try out because I intentionally installed LineageOS before I even started using as a phone.  I purchased this from Kogan for $239 - I would have preferred to walk into a shop in Adelaide but everywhere only had slightly newer model phones that were not yet on the officially supported list for LineageOS. Now I could have attempted to add my own support, I'm sure it would be an interesting project but I have too many interesting projects to consume my time as it is and I really just wanted a phone I could use immediately. I probably would have preferred a Redmi Note 7 Pro, which is supported also by /e/os a redistribution of LineageOS with a more privacy focus, but I couldn't find one to easily buy.
 
-A phone with that many cores and RAM really should perform. But I've seen that and better specs die, because of the bloadtware and also the impact of apps like Facebook (which I dont use on phones). As a spoiler, the new phone, with LineageOS and a minimal OpenGapps, absolutely flies. No lag, much reduced background Internet use. Win!
+A phone with that many cores and RAM really should perform. But I've seen that and better specs die, because of the bloatware and also the impact of apps like Facebook (which I dont use most of the time normally, and certainly not on my phone). As a spoiler, the new phone, with LineageOS and a minimal OpenGapps, absolutely flies! No lag, much reduced background Internet use. Win!
 
 Xiaomi M1901F7G specs:
 - 64GB flash
@@ -49,7 +52,7 @@ Xiaomi M1901F7G specs:
 - USB-C (so in theory, mechanically more robust for charging)
 - supported by LineageOS version 17 (equivalent to Android 9)
 
-Some interesting points:
+Some interesting observations:
 - Xiaomi actually have direct downloads for offical ROM images, which is quite good of them
 - this phone has an accessible bootloader (after some online fun and games)
 - the one from Kogan appears to be an "international" version, it came with and English + Indonesian quick start guide
@@ -116,3 +119,8 @@ From the PC ( Windows 10 virtual machine)
 - the Windows app will confirm the successful procedure, then reboot the phone again
 
 <img src="/images/miunlock11.png" alt="Completed" class="inline"/>
+
+- at this point you will need to progress through the phone user setup again, far enough to go into settings and re-enable developer USB mode again
+- we can now use the Android _fastload_ tool to install a new bootloader, TWRP, which we can then use to install LineageOS
+
+_(to be continued)_
