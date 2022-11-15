@@ -36,6 +36,8 @@ For my current timeframe, doing a network analysis is out of scope, so I dont wa
 
 I have my trusy Raspberry Pi 400 which I will use for a serial terminal (with luck), and a Wifi Access Point. According to the device instructions, I should be able to turn it on then find it with google home. I wont be doing that, so I'm going to try bluetooth scanning and wifi scanning - often IoT devices will expose an open Wifi AP for the initial pairing. I will make sure it doesn't connect to my normal AP, I dont want it accidentally upgrading the firmware.
 
+The device was manufactured in 2017, which explains the sale price, and perhaps there is a good chance of some legacy security vulnerabilities which may prove useful in the future.
+
 # Part 1 - Physical Teardown
 
 This looks like a not-completely-rubbish product on the outside, it would not look out of place in a high brand department store rather than the cheap stuff you find at Aldi or Kmart. It supports Home Assistant for issuing commands, and Chrome Cast, and can also operate as a plain old bluetooth speaker. Made in China of course.
@@ -56,7 +58,7 @@ However, that screw only seems to connect the strap, and also it is free-wheelin
 
 ![Sticker covering the screws](../images/cheap-smart-speaker-teardown-part1/40-screw-cover.png){:height="50%" width="50%"}
 
-With the screws removed, we can see inside. The enclosure has two parts, with a PCB in the lower half with cabling connected to components in the upper half.
+With the screws removed, we can see inside. The enclosure has two parts, with a PCB in the lid, with the buttons and LEDs, with cabling connected to components in the base.
 
 ![Initial inside view](../images/cheap-smart-speaker-teardown-part1/50-inside.png){:height="50%" width="50%"}
 
@@ -64,7 +66,27 @@ There is a speaker, which actually looks (and later, felt) quite good quality. T
 
 ![Inside the top view](../images/cheap-smart-speaker-teardown-part1/55-inside-top.png){:height="50%" width="50%"}
 
-I was then able to separate the enclosure halves. A wireless antenna (I'm assuming, Wifi) was attached with a sticky flex PCB antenna to the top, with a hot glue glob holding the U.FL connector to the PCB.
+I was then able to separate the enclosure halves. A wireless antenna (I'm assuming, Wifi) was attached with a sticky flex PCB antenna to the base, with a hot glue glob holding the U.FL connector to the PCB. The speaker was screwed to the top. The battery is an 18650, 3.7volt 2600mAh. The inner container it was in has a rubber seal, presumably for IPX6 protection. There is a flex cable to  small PCB somehow entrapped in the base, which has a micro-USB connector for recharging.
+
+The main PCB has a metal can over something, either the main processor chip, and/or the wifi+bluetooth circuitry.
 
 ![The enclosure split into halves](../images/cheap-smart-speaker-teardown-part1/60-enclosure.png){:height="50%" width="50%"}
+
+This is a closeup of the antenna.
+
+![Antenna](../images/cheap-smart-speaker-teardown-part1/65-antenna.png){:height="50%" width="50%"}
+
+At this point I took photos of all the IC's on the PCB so I can try and identify them later. The photo also shows 2 from the back - I'll discuss how I got to that shortly - and an unused connector (and the back of it)
+
+![Antenna](../images/cheap-smart-speaker-teardown-part1/70-ics.png){:height="100%" width="100%"}
+
+To get to the back, I had to be a bit careful - there were no screws, but I could see plastic lugs, and also the structure the enclosure screws connected also comes through the PCB. There are also two flex-connectors connecting the PCB to the base. I realised that there was some kind of rubber stuff or maybe tape, making the structures a very snug fit. I carefully cut this away, and then after disconnecting the two flex connectors, very carefull and slowly rocked the PCB until it finally came up over. The last thing I wanted to do was crack something!
+
+The lid has lighting duct, for LED display, and two microphones, to which the flex cables connect. There are four buttons on the PCB bottom, and a plethora of test points, which bodes well.
+
+![Antenna](../images/cheap-smart-speaker-teardown-part1/75-pcb-bottom.png){:height="100%" width="100%"}
+
+Now I started looking for possible methods to access the system. There is that unused connector, it is only labelled with test points but it could be some kind of JTAG or SWD port, or something totally unrelated, or maybe even a USB port. But the holy grail is a serial port. Thankfully I had an easier-ish job, as there was a UART label. Only problem: no PCB points or connectors near the label!
+
+![Antenna](../images/cheap-smart-speaker-teardown-part1/80-uart-label.png){:height="100%" width="100%"}
 
