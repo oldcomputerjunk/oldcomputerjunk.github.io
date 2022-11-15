@@ -10,6 +10,8 @@ tags:
 - bluray
 - embedded
 - hacking
+- reversing
+- hardware
 ---
 
 
