@@ -104,3 +104,12 @@ You can see the screw used to hold the strap in, it has caught on the plastic. T
 
 This is the end of the hardware teardown. In [Part 2](2022-11-12-cheap-smart-speaker-teardown-part2.markdown) we'll cover the results of the passive reconnaisance and some hypotheses, and in [Part 3](2022-11-12-cheap-smart-speaker-teardown-part32.markdown) how I determined which test points were the serial port and the first identification of the firmware of the running system.
 
+Oh yeah, what about that sticker?
+
+![Sticker over hole](../images/cheap-smart-speaker-teardown-part1/95-airhole.png){:height="100%" width="100%"}
+
+Reminder, that it would normally be further covered by the base rubber sticker...
+
+I have a couple of hypotheses - maybe someone can enlighten me!
+- as part of IPX6, perhaps the inside is temporarily evacuated when assembled to remove latent moisture? 
+- maybe it somehow complements the speaker? sub-woofer or damping or something?
