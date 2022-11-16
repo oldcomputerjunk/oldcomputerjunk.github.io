@@ -4,7 +4,7 @@ slug: cheap-smart-speaker-teardown-part1
 title:  "Cheap Smart Speaker Teardown part 1"
 date:   2022-11-12 01:00:00
 categories:
-- gps
+- infosec
 tags:
 - embedded
 - hacking
@@ -18,11 +18,11 @@ _Prelude: its been a while. Not that I've done nothing, but I kind of dropped th
 
 # Introduction
 
-Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice.
+Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice doing a teardown and firmware dump.
 
 # Scope
 
-I have been trying not to buy so much junk the last while, but in this case the thing was on sale for $29 (apparently they retailed for $179 new a few years ago) and the long range weather forecast hinted at yet more rain and storms, so I figured the next weekend I was not abl to get out or into the garden I'd do another teardown, and this time, also, write it up... this weekend, it definitely rained. A lot. And the wind... so I had a good chunk of time. Cognisant of the rabbit hole though, so the scope here is limited to the physical tear down, black box reconaissance, and dumping the firmware and a preliminary attack surface analysis. There is opportunity to do some network analysis and also to reverse binaries, but that may be a project for the future. Or not, as there are plenty of activites to attract attention... and hopefully the weather will finally clear as we head into summer.
+I have been trying not to buy so much junk the last while, but in this case the thing was on sale for $29 (apparently they retailed for $179 new a few years ago) and the long range weather forecast hinted at yet more rain and storms, so I figured the next weekend if I was not able to get out or into the garden I'd do another teardown, and this time, also, write it up... this weekend, it definitely rained. A lot. And the wind... so I had a good chunk of time. I'm ever cognisant of the rabbit hole though, so the scope here is limited to the physical tear down, black box reconaissance, and dumping the firmware and a preliminary attack surface analysis. I would expected there to be opportunity to do some network analysis oft the running system and also to reverse binaries, but that may be a project for the future. Or not, as there are plenty of activites to attract attention... and hopefully the weather will finally clear as we head into summer.
 
 # Objective
 
@@ -38,7 +38,7 @@ I have my trusy Raspberry Pi 400 which I will use for a serial terminal (with lu
 
 The device was manufactured in 2017, which explains the sale price, and perhaps there is a good chance of some legacy security vulnerabilities which may prove useful in the future.
 
-# Part 1 - Physical Teardown
+# Part 1 - Physical Teardown & Photo Essay
 
 This looks like a not-completely-rubbish product on the outside, it would not look out of place in a high brand department store rather than the cheap stuff you find at Aldi or Kmart. It supports Home Assistant for issuing commands, and Chrome Cast, and can also operate as a plain old bluetooth speaker. Made in China of course.
 
@@ -84,9 +84,23 @@ To get to the back, I had to be a bit careful - there were no screws, but I coul
 
 The lid has lighting duct, for LED display, and two microphones, to which the flex cables connect. There are four buttons on the PCB bottom, and a plethora of test points, which bodes well.
 
-![Antenna](../images/cheap-smart-speaker-teardown-part1/75-pcb-bottom.png){:height="100%" width="100%"}
+![PCB underside](../images/cheap-smart-speaker-teardown-part1/75-pcb-bottom.png){:height="100%" width="100%"}
 
 Now I started looking for possible methods to access the system. There is that unused connector, it is only labelled with test points but it could be some kind of JTAG or SWD port, or something totally unrelated, or maybe even a USB port. But the holy grail is a serial port. Thankfully I had an easier-ish job, as there was a UART label. Only problem: no PCB points or connectors near the label!
 
-![Antenna](../images/cheap-smart-speaker-teardown-part1/80-uart-label.png){:height="100%" width="100%"}
+![Uart Label](../images/cheap-smart-speaker-teardown-part1/80-uart-label.png){:height="100%" width="100%"}
+
+In part 3 we'll look at where the serial port was.
+
+The last part of the teardown is accessing that PCB embedded in the lower part of the enclosure, supporting the micro USB power connector. On inspection there was no obvious seam, so I was trying to work out how it got there.
+
+![Close up of power inlet](../images/cheap-smart-speaker-teardown-part1/90-innerclosure-1.png){:height="100%" width="100%"}
+
+These things are designed for manufacture, so it shouldn't be that hard. I also noted there was a gap where the speaker hd been - in the photo, you can see that loose screw kind of nestled in it. Then it clicked, there was an inner enclosure tightly pressed in the outer. After considering whether I might try and pry it open, which is always prone to breaking tabs or other bits of plastic, in the end with some careful pressure I was able to pop it out.
+
+![Separated lower enclosure parts](../images/cheap-smart-speaker-teardown-part1/90-innerclosure-separated.png){:height="100%" width="100%"}
+
+You can see the screw used to hold the strap in, it has caught on the plastic. There are also test points on the PCB which could b e useful in the future.
+
+This is the end of the hardware teardown. In [Part 2](2022-11-12-cheap-smart-speaker-teardown-part2.markdown) we'll cover the results of the passive reconnaisance and some hypotheses, and in [Part 3](2022-11-12-cheap-smart-speaker-teardown-part32.markdown) how I determined which test points were the serial port and the first identification of the firmware of the running system.
 
