@@ -54,7 +54,7 @@ There is no datasheet and little information on the Mediatek chips. I was eventu
 
 The only thing that I could not work out or even guess was the S1304 3112; perhaps it is like the 358 and missing suffix markers I haven't thought of.
 
-Gongkai is a term from Bunnie Huang, describe how Chinese culture in relation to sharing technical information is different from both Western proprietary IP and the open source culture. I've used it here, because I managed to find info, in some cases quite detailed compared to what I've disclosed here, with some creative searching.
+[Gongkai](https://www.bunniestudios.com/blog/?page_id=3107) is a term from Bunnie Huang, describe how Chinese culture in relation to sharing technical information is different from both Western proprietary IP and the open source culture. I've used it here, because I managed to find info, in some cases quite detailed compared to what I've disclosed here, with some creative searching.
 
 Whether the can hides an MT2601 or not, spoiler - in Part 3 after I found the serial port I confirmed the system runs an ARM 64 bit dual core CPU and has access to 512MB DDR.
 
