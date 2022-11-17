@@ -120,7 +120,7 @@ Github is also a friend for potential treasure troves:
 
 One thing that helps turn up other interesting things - some of those inscrutable blogs had screenshots, with filenames - sometimes you can get luck searching for those too... I have in the past, but had less joy this time.
 
-# Further reconnaisance
-- later part
-- how google home / cast works / jerry gamblin / etc
-- how chromiumos is built etc
+# Further research
+
+At this point, I returned to the tools, broke out the DMM, oscilloscope and soldering iron, and the and found the serial port. This is up next, in Part 3.
+
