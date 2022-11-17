@@ -9,6 +9,7 @@ tags:
 - embedded
 - hacking
 - hardware
+- reversing
 - gps
 - retrocomputing
 ---
