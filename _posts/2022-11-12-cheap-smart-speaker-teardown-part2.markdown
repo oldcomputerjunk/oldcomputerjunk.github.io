@@ -18,11 +18,11 @@ tags:
 
 Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice doing a teardown and firmware dump
 
-This is Part 2 in a series. [Part 1](2022-11-12-cheap-smart-speaker-teardown-part1.markdown) is a photo essay of the hardware teardown.
+This is Part 2 in a multi part series. [Part 1](2022-11-12-cheap-smart-speaker-teardown-part1.markdown) is a photo essay of the hardware teardown.
 
 # Recap
 
-To recap, the objective is to complete a physical tear down (done), perofrm a black box reconaissance, dumping the firmware and make a preliminary attack surface analysis. With luck, then put it back together retaining access to the running internals.
+To recap, the objective is to complete a physical tear down (done), perform a black box reconaissance, dump the firmware and make a preliminary attack surface analysis. With luck, then put it back together retaining access to the running internals.
 
 # Part 2 - Passive Reconaissance
 
@@ -34,7 +34,7 @@ The following is recorded in the order I was searching, not any particular logic
 
 First because this is always interesting to me, I identified the integrated circuits. The image is the same one from  [Part 1](2022-11-12-cheap-smart-speaker-teardown-part1.markdown)
 
-![Antenna](../images/cheap-smart-speaker-teardown-part1/70-ics.png){:height="100%" width="100%"}
+![Antenna](/images/cheap-smart-speaker-teardown-part1/70-ics.png){:height="100%" width="100%"}
 
 The table lists them all; I'll follow with some comments.
 
