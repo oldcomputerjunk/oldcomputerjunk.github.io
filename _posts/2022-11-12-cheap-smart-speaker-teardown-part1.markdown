@@ -116,4 +116,4 @@ I have a couple of hypotheses - maybe someone can enlighten me!
 - as part of IPX6, perhaps the inside is temporarily evacuated when assembled to remove latent moisture? 
 - maybe it somehow complements the speaker? sub-woofer or damping or something?
 
-Next up, [Part 2]({% post_url 2022-11-12-cheap-smart-speaker-teardown-part2 %}) - passive reconaissance.
+Next up, [Part 2]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) - passive reconaissance.

@@ -18,7 +18,7 @@ tags:
 
 Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice doing a teardown and firmware dump
 
-This is Part 2 in a multi part series. [Part 1](2022-11-12-cheap-smart-speaker-teardown-part1.markdown) is a photo essay of the hardware teardown.
+This is Part 2 in a multi part series. [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) is a photo essay of the hardware teardown.
 
 # Recap
 
@@ -32,7 +32,7 @@ The following is recorded in the order I was searching, not any particular logic
 
 ## Chip identification
 
-First because this is always interesting to me, I identified the integrated circuits. The image is the same one from  [Part 1](2022-11-12-cheap-smart-speaker-teardown-part1.markdown)
+First because this is always interesting to me, I identified the integrated circuits. The image is the same one from Part 1.
 
 ![Antenna](/images/cheap-smart-speaker-teardown-part1/70-ics.png){:height="100%" width="100%"}
 
