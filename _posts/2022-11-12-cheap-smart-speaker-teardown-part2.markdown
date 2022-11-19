@@ -38,7 +38,7 @@ First because this is always interesting to me, I identified the integrated circ
 
 The table lists them all; I'll follow with some comments.
 
-<div class="overflow-table"  markdown="block">
+<div class="overflow-table"  markdown="1">
 
 | Marking | Identified by me as | Data? | Confidence | Other References | Notes |
 | ------- | ------------- | ----------              | ---------- | ----- | -- |

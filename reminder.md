@@ -50,3 +50,4 @@ Markdown:
     ```
     [Part 1](\{\{ site.baseurl }}\{\% link _posts/filename.markdown %})
     ```
+    - note the backslashes are not part of this - I need to stop kramdown from interpreting the above
