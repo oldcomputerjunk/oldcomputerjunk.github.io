@@ -40,4 +40,10 @@ Links:
 
 Emoji: [https://gist.github.com/roachhd/1f029bd4b50b8a524f3c]() and [https://gist.github.com/rxaviers/7360908]()
 
-Page linking: https://stackoverflow.com/a/41213193
+Page linking: [https://stackoverflow.com/a/41213193]
+
+Markdown:
+
+- remember to wrap raw links in `[]` or `<>`
+- to make a table scroll horizontala, wrap it in a div with whitespace and use a style to set overflow-x
+- internal page linking - `[Part 1]({{ site.baseurl }}{% link _posts/filename.markdown %})`
