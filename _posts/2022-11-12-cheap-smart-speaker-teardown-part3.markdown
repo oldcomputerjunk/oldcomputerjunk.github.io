@@ -22,7 +22,7 @@ This is the second part in a multi-part series:
 - [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) - Photo essay of physical teardown
 - [Part 2]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) - passive reconaissance and integrated circuit identification
 - Part 3 - find the serial port
-- Part 4 - initial exploration (coming)
+- [Part 4]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part4.markdown %}) - initial exploration
 - Part 5 - (coming)
 
 # Recap
@@ -51,7 +51,7 @@ I loaded the PCB photos in hi-res on the big screen, and spent some time eyeball
 
 Here is where I hit a red herring. It is very easy to make mistakes when searching for an unknown; but then, if there was already a pulished schematic I probably wouldn't be needing to reverse engineer anything!
 
-On the underside in the area of the Uart labels, there are a number of pins. There are the pins marked (A), but they had no label. But I got a interested because at (B) are some pins - these are marked TPD5 and TPD6 - and I noted most of the other test points were labelled TPMxx. I wondered - is the 'D' the difference?
+On the underside in the area of the Uart labels, there are a number of pins. There are the pins marked (A), but they had no label. But I got interested because at (B) are some pins - these are marked TPD5 and TPD6 - and I noted most of the other test points were labelled TPMxx. I wondered - is the 'D' the difference?
 
 ![UART Candidate pins](/images/cheap-smart-speaker-teardown-part3/110-uart-maybe.png){:height="50%" width="50%"}
 
@@ -109,7 +109,7 @@ Usually this junk indicates the wrong speed. So I cyced through all the common o
 
 ## How to us an oscilloscope to estimate baud rate
 
-Back to the CRO: the quick description is: keep triggering until something fills the screen with a diversity of high and low of various widths, and then I measured the thinnest. The pulses and gaps were approx 1 microsecond... inverse of approximately 1MSPS, or close enough to 921000 baud... so I reconfigured the Pi again, and this time, running the command picocom -b 921000 - eureka!
+Back to the CRO: the quick description is: keep triggering until something fills the screen with a diversity of high and low of various widths, and then measure the thinnest. In this case, the pulses and gaps were approx 1 microsecond... inverse of approximately 1MSPS, or close enough to 921000 baud... so I reconfigured the Pi again, and this time, running the command picocom -b 921000 - eureka!
 
 ### Longer description of how to estimate baud rate
 
@@ -131,7 +131,7 @@ I couldn't be bothered getting the Hantek out and connected up to a laptop, and 
     ![Serial signal starting to resolve](/images/cheap-smart-speaker-teardown-part3/121-baudrate.png){:height="50%" width="50%"}
 - in this case I ended up at 5&micro;s/div which covered the screen with around 80&micro;s of signal
 - trigger again, keep triggering until the signal has a lot of narrow pulses
-    - ideal data bytes would be 0xaa or 0x55 but we have no control over what is output in this case
+    - the ideal data bytes for this would be 0xaa or 0x55, but we have no control over what is output in this case
 - use the markers a number of times to estimate the width of several of the narrowest pulses
 - and then again, to estimate the width of a bytes worth of pulses
 - there is a little bit of guesswork involved, but you can get a feel for which are individual 0101 sequences
@@ -192,7 +192,7 @@ Terminal ready
 
 When I pressed ENTER with the other line connected as well, I saw a hash (`#`) prompt show!
 
-Next, in Part 4 - initial exploration of the operating system
+Next, in [Part 4]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part4.markdown %}) - initial exploration of the operating system
 
 ---
 

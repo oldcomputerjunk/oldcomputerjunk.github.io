@@ -22,7 +22,7 @@ This is the second part in a multi-part series:
 - [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) - Photo essay of physical teardown
 - Part 2 - passive reconaissance and integrated circuit identification
 - [Part 3]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) - find the serial port
-- Part 4 - initial exploration (coming)
+- [Part 4]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part4.markdown %}) - initial exploration
 - Part 5 - (coming)
 
 # Recap
