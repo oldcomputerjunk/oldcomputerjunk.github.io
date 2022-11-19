@@ -18,7 +18,12 @@ tags:
 
 Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice doing a teardown and firmware dump
 
-This is Part 2 in a multi part series. [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) is a photo essay of the hardware teardown.
+This is the second part in a multi-part series:
+- [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) - Photo essay of physical teardown
+- Part 2 - passive reconaissance and integrated circuit identification
+- [Part 3]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) - find the serial port
+- Part 4 - initial exploration (coming)
+- Part 5 - (coming)
 
 # Recap
 
@@ -127,4 +132,3 @@ One thing that helps turn up other interesting things - some of the blogs had sc
 # Further research
 
 At this point, I returned to the tools, broke out the DMM, oscilloscope and soldering iron, and hutned for the serial port. This is up next, in [Part 3]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %})
-
