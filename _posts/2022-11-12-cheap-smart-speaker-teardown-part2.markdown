@@ -52,8 +52,8 @@ The table lists them all; I'll follow with some comments.
 | Mediatek MT6392A | Power Management IC (PMIC) | Gongkai | 100 % | <https://patchwork.kernel.org/project/linux-mediatek/patch/20190619142013.20913-8-fparent@baylibre.com/>| Has Linux device driver. Can even be purchased from ALI express|
 | PCM5121 79TG4 A5XD | Audio driver (Stereo DAC) | <https://www.ti.com/product/PCM5121> | 100% |  | |
 | MX30LF4G18AC-TI | 512Mx8 Flash memory (aka eMMC) | <https://www.farnell.com/datasheets/2815343.pdf> | 100% | | You can even buy these: <https://au.element14.com/macronix/mx30lf4g18ac-ti/flash-memory-4gbit-40-to-85deg/dp/3129220>|
-| S1304 3112 | ? | | 0% | | |
-| STM8S003F3 P6 7B22F HL 730 Y | 8-bit ARM micro, 16MHz with 8K flash | |100% | | Maybe used for controlling the pretty patterns the LEDs make? |
+| S1304 3112 | LED controller | https://datasheetspdf.com/pdf/1301432/SI-EN/SN3112-09/1| 75% | | |
+| STM8S003F3 P6 7B22F HL 730 Y | 8-bit ARM micro, 16MHz with 8K flash | |100% | | Maybe used for controlling the pretty patterns the LEDs make via the 3112?  |
 | 358 | LM358 2channel Op-Amp | | 75% | | It makes most sense; maybe it buffers input from the microphones |
 | CS8509E 8H22 | Audio amp| | | | Can be found on eBay|
 
