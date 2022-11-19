@@ -58,9 +58,9 @@ There is no datasheet and little information on the Mediatek chips. I was eventu
 
 The only thing that I could not work out or even guess was the S1304 3112; perhaps it is like the 358 and missing suffix markers I haven't thought of.
 
-[Gongkai](https://www.bunniestudios.com/blog/?page_id=3107) is a term from Bunnie Huang, describe how Chinese culture in relation to sharing technical information is different from both Western proprietary IP and the open source culture. I've used it here, because I managed to find info, in some cases quite detailed compared to what I've disclosed here, with some creative searching.
+[Gongkai](https://www.bunniestudios.com/blog/?page_id=3107) is a term highlighted by open source hacker and maker Bunnie Huang, describing how a Chinese version of open source culture in relation to sharing technical information is different from both Western proprietary IP and open source. I've used it here, because I managed to stumble over enlightening information with some creative searching.
 
-Whether the can hides an MT2601 or not, spoiler - in Part 3 after I found the serial port I confirmed the system runs an ARM 64 bit dual core CPU and has access to 512MB DDR.
+Whether the metal can hides an MT2601 or not, spoiler! In Part 3 after I found the serial port, I confirmed the system runs an ARM 64 bit dual core CPU and has access to 512MB DDR.
 
 ## FCC search
 
@@ -105,16 +105,16 @@ Anyway, rant aside, I found much more joy using the following strategy:
 - and occasionally even yandex
 - my hypothesis is that google indexing is tweaked for different parts of the globe; here, I'm looking for leakage and inferences from china, they are more likely to turn up in other places
 
-In the end though, I found a lot of information in a blog written in (probably) chinese, with links to other stuff; and eventually found my way to FIXME. This site was even more chinese, untranslatable and when I clicked on the image of what looked like the datasheet it wanted me to pay to downloaded it (AFAICT). However, there was a scrollable preview - so in the end, anyone with a snipping tool is now home! (a [Hint](https://www.docin.com/)!)
+Note, before going too far down dark holes, I switched over to ProtonVPN and a private safe browser... some stuff was already geoblocked by my own firewall!
 
-Some interesting other things I found:
+In the end though, I found a lot of information in a blog written in (probably) Chinese, with links to other stuff; and eventually found my way to a site with previews of a trove of PDFs. This site was also Chinese, and when I clicked on the image of what looked like the datasheet it wanted me to pay to downloaded it (AFAICT). However, there was a scrollable preview - so in the end, anyone with a snipping tool is now home! (a [Hint](https://www.docin.com/)!)
+
+Some interesting other things I found along the way:
 - <https://www.cxymm.net/article/szx940213/83621319> -- GPIO information
 - <https://www.cxymm.net/article/szx940213/85780909>
 - <https://forum.xda-developers.com/t/mediatek-wifi-bt-fm-gps-combo-chips-hidden-capabilities-mt6620-mt6628-mt6630.3591182/>
 - <https://www.programmersought.net/article/332836317.html?ysclid=ladxxdhdje376871861> -- only because of yandex
 - <http://bbs.16rd.com/citiao.html>
-
-Note, before going too far down dark holes, I switched over to ProtonVPN and a private safe browser... some stuff was already geoblocked by my own firewall!
 
 Github is also a friend for potential treasure troves:
 - <https://github.com/bkerler/mtkclient>
@@ -122,9 +122,9 @@ Github is also a friend for potential treasure troves:
 - <https://github.com/aquette/SP-Flash-Tool-source>
 - <https://github.com/manviirr/Customization_Kit_buildspec>
 
-One thing that helps turn up other interesting things - some of those inscrutable blogs had screenshots, with filenames - sometimes you can get luck searching for those too... I have in the past, but had less joy this time.
+One thing that helps turn up other interesting things - some of the blogs had screenshots, with filenames - sometimes you can get luck searching for those filenames too... or other forms of google dorking... that has been fruitful in the past, but I had less joy this time.
 
 # Further research
 
-At this point, I returned to the tools, broke out the DMM, oscilloscope and soldering iron, and the and found the serial port. This is up next, in Part 3.
+At this point, I returned to the tools, broke out the DMM, oscilloscope and soldering iron, and hutned for the serial port. This is up next, in [Part 3]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %})
 
