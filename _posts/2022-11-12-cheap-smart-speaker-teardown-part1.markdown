@@ -36,9 +36,9 @@ Secondary objective if at all possible, is disassemble it in a way I can put it 
 
 For my current timeframe, doing a network analysis is out of scope, so I dont want it connecting to the Internet or having to link an account (at least it appears to just need the google home app and no vendor app)  Thus, I'm working in the following order: tear down, power up, gain access, dump firmware.
 
-I have my trusy Raspberry Pi 400 which I will use for a serial terminal (with luck), and a Wifi Access Point. According to the device instructions, I should be able to turn it on then find it with google home. I wont be doing that, so I'm going to try bluetooth scanning and wifi scanning - often IoT devices will expose an open Wifi AP for the initial pairing. I will make sure it doesn't connect to my normal AP, I dont want it accidentally upgrading the firmware.
+I have my trusy Raspberry Pi 400 which I will use for a serial terminal (with luck), and a Wifi Access Point. According to the product instructions, I should be able to turn it on then find it with google home. I wont be doing that, so I'm going to try bluetooth scanning and wifi scanning - often IoT devices will expose an open Wifi AP for the initial pairing. I will make sure it doesn't connect to my normal AP, I dont want it accidentally upgrading the firmware.
 
-The device was manufactured in 2017, which explains the sale price, and perhaps there is a good chance of some legacy security vulnerabilities which may prove useful in the future.
+The target device was manufactured in 2017, which explains why it was on clearance; and perhaps there is a good chance of some legacy security vulnerabilities which may prove useful in the future.
 
 # Part 1 - Physical Teardown & Photo Essay
 
@@ -46,15 +46,15 @@ This looks like a not-completely-rubbish product on the outside, it would not lo
 
 This device feels like reasonable quality when you pick it up. It has a strap that feels not-fragile, and the specification claims to be IPX6 for splash resistance. It has a nice weight and looks like it might not completely break the first time you drop it on a concrete floor. There are four buttons for operation, and coloured LEDs. And one assumes, a speaker and microphone(s).
 
-![Smart Speaker Top View](/images/cheap-smart-speaker-teardown-part1/10-smart-speaker.png){:height="50%" width="50%"}
+![Smart Speaker Top View](/images/cheap-smart-speaker-teardown-part1/10-smart-speaker.png){:height="25%" width="25%"}
 
-The manufacturer has also learned a thing from Apple in how it was packaged.
+The manufacturer has also learned a thing from Apple in how neatly it was packaged.
 
-![Packaging](/images/cheap-smart-speaker-teardown-part1/20-packaging.png){:height="50%" width="50%"}
+![Packaging](/images/cheap-smart-speaker-teardown-part1/20-packaging.png){:height="25%" width="25%"}
 
 On turning it over, there is one obvious screw cover, so I gently unstuck it. The tool shown is from a mobile phone repair kit.
 
-![Strapping screw](/images/cheap-smart-speaker-teardown-part1/30-strap-screw.png){:height="50%" width="50%"}
+![Strapping screw](/images/cheap-smart-speaker-teardown-part1/30-strap-screw.png){:height="25%" width="25%"}
 
 However, that screw only seems to connect the strap, and also it is free-wheeling after I loosten it. Given the moisture-resistant nature of the device, I dont think that one actually opens it anyway. I confirmed my suspicions this was a red herring, when I started playing at the edge of the circular padding on the base of the device, which turned out to also be a fat sticker. I peeled that off and exposed four more screws. Also a hole with a clear sticker, which I'll get back to later.
 
@@ -86,35 +86,37 @@ To get to the back, I had to be a bit careful - there were no screws, but I coul
 
 The lid has lighting duct, for LED display, and two microphones, to which the flex cables connect. There are four buttons on the PCB bottom, and a plethora of test points, which bodes well.
 
-![PCB underside](/images/cheap-smart-speaker-teardown-part1/75-pcb-bottom.png){:height="100%" width="100%"}
+![PCB underside](/images/cheap-smart-speaker-teardown-part1/75-pcb-bottom.png){:height="50%" width="50%"}
 
 Now I started looking for possible methods to access the system. There is that unused connector, it is only labelled with test points but it could be some kind of JTAG or SWD port, or something totally unrelated, or maybe even a USB port. But the holy grail is a serial port. Thankfully I had an easier-ish job, as there was a UART label. Only problem: no PCB points or connectors near the label!
 
-![Uart Label](/images/cheap-smart-speaker-teardown-part1/80-uart-label.png){:height="100%" width="100%"}
+![Uart Label](/images/cheap-smart-speaker-teardown-part1/80-uart-label.png){:height="50%" width="50%"}
 
 In part 3 we'll look at where the serial port was.
 
 The last part of the teardown is accessing that PCB embedded in the lower part of the enclosure, supporting the micro USB power connector. On inspection there was no obvious seam, so I was trying to work out how it got there.
 
-![Close up of power inlet](/images/cheap-smart-speaker-teardown-part1/90-innerclosure-1.png){:height="100%" width="100%"}
+![Close up of power inlet](/images/cheap-smart-speaker-teardown-part1/90-innerclosure-1.png){:height="50%" width="50%"}
 
 These things are designed for manufacture, so it shouldn't be that hard. I also noted there was a gap where the speaker hd been - in the photo, you can see that loose screw kind of nestled in it. Then it clicked, there was an inner enclosure tightly pressed in the outer. After considering whether I might try and pry it open, which is always prone to breaking tabs or other bits of plastic, in the end with some careful pressure I was able to pop it out.
 
-![Separated lower enclosure parts](/images/cheap-smart-speaker-teardown-part1/90-innerclosure-separated.png){:height="100%" width="100%"}
+![Separated lower enclosure parts](/images/cheap-smart-speaker-teardown-part1/90-innerclosure-separated.png){:height="50%" width="50%"}
 
 You can see the screw used to hold the strap in, it has caught on the plastic. It seems there are no smarts on the USB power PCB, just power protection.
 
-![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/76-usb-pcb.png){:height="100%" width="100%"}
+![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/76-usb-pcb.png){:height="25%" width="25%"}
 
 There are also test points on the USB power PCB which could be useful in the future.
 
-![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/77-usb-pcb.png){:height="100%" width="100%"}
+![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/77-usb-pcb.png){:height="25%" width="25%"}
 
-This is the end of the hardware teardown. In [Part 2](2022-11-12-cheap-smart-speaker-teardown-part2.markdown) we'll cover the results of the passive reconnaisance and some hypotheses, and in [Part 3](2022-11-12-cheap-smart-speaker-teardown-part32.markdown) how I determined which test points were the serial port and the first identification of the firmware of the running system.
+This is the end of the hardware teardown. In [Part 2]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) we'll cover the results of the passive reconnaisance and some hypotheses, and in [Part 2]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %}) how I determined which test points were the serial port and the first identification of the firmware of the running system.
 
-Oh yeah, what about that sticker?
+---
 
-![Sticker over hole](/images/cheap-smart-speaker-teardown-part1/95-airhole.png){:height="100%" width="100%"}
+I almost forgot, what about that sticker?
+
+![Sticker over hole](/images/cheap-smart-speaker-teardown-part1/95-airhole.png){:height="50%" width="50%"}
 
 Reminder, that it would normally be further covered by the base rubber sticker...
 
