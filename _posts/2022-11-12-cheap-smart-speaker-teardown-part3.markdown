@@ -192,7 +192,7 @@ Terminal ready
 
 When I pressed ENTER with the other line connected as well, I saw a hash (`#`) prompt show!
 
-Next, in [Part 4]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part4.markdown %}) - initial exploration of the operating system
+Next, in Part 4 - initial exploration of the operating system
 
 ---
 
