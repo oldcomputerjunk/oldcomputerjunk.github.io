@@ -38,6 +38,7 @@ First because this is always interesting to me, I identified the integrated circ
 
 The table lists them all; I'll follow with some comments.
 
+<div class="overflow-table">
 | Marking | Identified by me as | Data? | Confidence | Other References | Notes |
 | ------- | ------------- | ----------              | ---------- | ----- | -- |
 | (none) | Mediatek MT2601 Dual core ARM 64-bit with RAM | Gongkai | 88% | | It is not wireless, so I'm assuming this is the main processor (ARM, maybe MIPS, but the 2601 is ARM), and possibly a memory chip(s)|
@@ -49,6 +50,7 @@ The table lists them all; I'll follow with some comments.
 | STM8S003F3 P6 7B22F HL 730 Y | 8-bit ARM micro, 16MHz with 8K flash | |100% | | Maybe used for controlling the pretty patterns the LEDs make? |
 | 358 | LM358 2channel Op-Amp | | 75% | | It makes most sense; maybe it buffers input from the microphones |
 | CS8509E 8H22 | Audio amp| | | | Can be found on eBay|
+</div>
 
 There is no datasheet and little information on the Mediatek chips. I was eventually able to infer quite a bit, I'll go through this process in a bit. I have never quite understood the purpose of this. 95% of integrated circuits have their datasheets published; after all, you want the engineers who influence buying decisions to know how to use them properly. Intel and AMD obviously live or die by Intellectual Property and yet you can get datasheets for i7's or Athlons or whatever.
 
