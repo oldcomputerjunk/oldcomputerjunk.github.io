@@ -1,7 +1,7 @@
 ---
 layout: post
-slug: cheap-smart-speaker-teardown-part3
-title:  "Cheap Smart Speaker Teardown part 3"
+slug: cheap-smart-speaker-teardown-part4
+title:  "Cheap Smart Speaker Teardown part 4"
 date:   2022-11-18 18:00:00
 categories:
 - infosec
@@ -18,7 +18,7 @@ tags:
 
 Last month I picked up a cheap smart speaker from a local electronics retailer and this weekend I was rained in, so took the opportunity to have some fun and practice doing a teardown and firmware dump
 
-This is the second part in a multi-part series:
+This is the fourth part in a multi-part series:
 - [Part 1]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part1.markdown %}) - Photo essay of physical teardown
 - [Part 2]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part2.markdown %}) - passive reconaissance and integrated circuit identification
 - [Part 3]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %}) - find the serial port
