@@ -48,5 +48,5 @@ Markdown:
 - to make a table scroll horizontala, wrap it in a div with whitespace and use a style to set overflow-x
 - internal page linking:
     ```
-    [Part 1]({{ site.baseurl }}{% link _posts/filename.markdown %})
+    [Part 1](\{\{ site.baseurl }}\{\% link _posts/filename.markdown %})
     ```

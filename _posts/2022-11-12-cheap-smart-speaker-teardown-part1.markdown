@@ -102,7 +102,13 @@ These things are designed for manufacture, so it shouldn't be that hard. I also 
 
 ![Separated lower enclosure parts](/images/cheap-smart-speaker-teardown-part1/90-innerclosure-separated.png){:height="100%" width="100%"}
 
-You can see the screw used to hold the strap in, it has caught on the plastic. There are also test points on the PCB which could b e useful in the future.
+You can see the screw used to hold the strap in, it has caught on the plastic. It seems there are no smarts on the USB power PCB, just power protection.
+
+![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/76-usb-pcb.png){:height="100%" width="100%"}
+
+There are also test points on the USB power PCB which could be useful in the future.
+
+![USB Power PCB](/images/cheap-smart-speaker-teardown-part1/77-usb-pcb.png){:height="100%" width="100%"}
 
 This is the end of the hardware teardown. In [Part 2](2022-11-12-cheap-smart-speaker-teardown-part2.markdown) we'll cover the results of the passive reconnaisance and some hypotheses, and in [Part 3](2022-11-12-cheap-smart-speaker-teardown-part32.markdown) how I determined which test points were the serial port and the first identification of the firmware of the running system.
 
