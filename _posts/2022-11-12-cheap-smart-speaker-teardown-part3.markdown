@@ -2,7 +2,7 @@
 layout: post
 slug: cheap-smart-speaker-teardown-part3
 title:  "Cheap Smart Speaker Teardown part 3"
-date:   2022-11-18 02:00:00
+date:   2022-12-18 02:00:00
 categories:
 - infosec
 tags:

