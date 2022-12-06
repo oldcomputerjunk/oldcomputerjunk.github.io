@@ -75,6 +75,9 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   max-width: 28rem;
 }
+.overflow-table {
+  overflow-x: scroll;
+}
 @media (min-width: 38em) {
   .container {
     max-width: 32rem;
@@ -82,10 +85,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (min-width: 56em) {
   .container {
-    max-width: 38rem;
+    max-width: 50rem;
+  }
+}
+/* This seems to leave too much left-right whitespace so I add a couple more */ 
+@media (min-width: 62em) {
+  .container {
+    max-width: 56rem;
+  }
+}
+@media (min-width: 68em) {
+  .container {
+    max-width: 62rem;
   }
 }
 
+
+@media (min-width: 74em) {
+  .container {
+    max-width: 68rem;
+  }
+}
 
 /*
  * Masthead
