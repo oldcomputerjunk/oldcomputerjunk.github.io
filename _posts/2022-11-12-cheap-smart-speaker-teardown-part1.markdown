@@ -52,19 +52,19 @@ This looks like a not-completely-rubbish product on the outside, it would not lo
 
 This device feels like reasonable quality when you pick it up. It has a strap that feels not-fragile, and the specification claims to be IPX6 for splash resistance. It has a nice weight and looks like it might not completely break the first time you drop it on a concrete floor. There are four buttons for operation, and coloured LEDs. And one assumes, a speaker and microphone(s).
 
-![Smart Speaker Top View](/images/cheap-smart-speaker-teardown-part1/10-smart-speaker.png){:height="25%" width="25%"}
+(insert picture)
 
 The manufacturer has also learned a thing from Apple in how neatly it was packaged.
 
-![Packaging](/images/cheap-smart-speaker-teardown-part1/20-packaging.png){:height="25%" width="25%"}
+(insert picture)
 
 On turning it over, there is one obvious screw cover, so I gently unstuck it. The tool shown is from a mobile phone repair kit.
 
-![Strapping screw](/images/cheap-smart-speaker-teardown-part1/30-strap-screw.png){:height="25%" width="25%"}
+(insert picture)
 
 However, that screw only seems to connect the strap, and also it is free-wheeling after I loosen it. Given the moisture-resistant nature of the device, I don't think that one actually opens it anyway. I confirmed my suspicions this was a red herring, when I started playing at the edge of the circular padding on the base of the device, which turned out to also be a fat sticker. I peeled that off and exposed four more screws. Also a hole with a clear sticker, which I'll get back to later.
 
-![Sticker covering the screws](/images/cheap-smart-speaker-teardown-part1/40-screw-cover.png){:height="50%" width="50%"}
+(insert picture)
 
 With the screws removed, we can see inside. The enclosure has two parts, with a PCB in the lid, with the buttons and LEDs, with cabling connected to components in the base.
 
@@ -78,7 +78,7 @@ I was then able to separate the enclosure halves. A wireless antenna (I'm assumi
 
 The main PCB has a metal can over something, either the main processor chip, and/or the Wi-Fi+Bluetooth circuitry.
 
-![The enclosure split into halves](/images/cheap-smart-speaker-teardown-part1/60-enclosure.png){:height="50%" width="50%"}
+(insert picture)
 
 This is a closeup of the antenna.
 

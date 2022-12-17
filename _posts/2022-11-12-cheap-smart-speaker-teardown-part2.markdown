@@ -76,7 +76,7 @@ They don't seem to be super community oriented citizens, aside from lack of GPL 
 
 Along the way I found a GitHub repo where someone had aggregated information on quite a few similar speaker products. This proved helpful.
 
-## Preliminary search for code and CVE's
+## Preliminary search for code and other information
 
 I did find some interesting things, I might come back to that later.
 
