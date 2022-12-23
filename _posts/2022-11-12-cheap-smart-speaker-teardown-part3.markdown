@@ -134,8 +134,7 @@ I couldn't be bothered getting the Hantek out and connected up to a laptop, and 
 - and then again, to estimate the width of a bytes worth of pulses
 - there is a little bit of guesswork involved, but you can get a feel for which are individual 0101 sequences
 - in this case, I observed that each bit was of the order of 1&micro;s
-- and roughly typically 8.5&micro;s wide for 8 pulses width
-    - note, there will be quantisation / rounding especially for a lower spec'd CRO like this
+- and roughly typically 8.5&micro;s wide for 8 pulses width, and don't forget there is a stop bit
 - finally, observe that 921000 baud will have pulses just wider than 1&micro;s (strictly, 100000/921000 or 1.08&micro;s) which rounds up to around 8.5&micro;s (strictly, 8.68&micro;s) for a byte
 
 ![Final detected oscilloscope shot](/images/cheap-smart-speaker-teardown-part3/123-baudrate.png){:height="50%" width="50%"}
