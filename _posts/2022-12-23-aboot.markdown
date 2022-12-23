@@ -23,11 +23,11 @@ Warning: this article serves as an overview, and omits lower detail about severa
 
 ## Background and Boot Process
 
-There is a lot of online material describing how Android is built and deployed, courtesy of the Android Open Source project. This includes everything from the boot process through to the user space. Start at https://source.android.com although the more interesting bits can sometimes take some searching.
+There is a lot of online material describing how Android is built and deployed, courtesy of the Android Open Source project. This includes everything from the boot process through to the user space. Start at [https://source.android.com]() although the more interesting bits can sometimes take some searching.
 
 In a very approximate overview a typical Android Linux has multiple storage partitions in the device flash, the most important of these includes the Linux kernel and initramfs, known as a BOOTIMG in Android terms, and one or more read-only partitions, perhaps mounted in /system and /vendor, and a writable partition in /data. There will typically be quite a bit of variety on top of that, and additionally there will be other paritions in the flash that are not Linux filesystems. Also, when I say writable, I mean from a mounted Linux filesystem sense - there will be layers of permissions on top of that so an arbitrary non-root Linux process can't just write anywhere...
 
-At the start of the flash, there will often be a small first stage bootloader, or PRELOADER, which gets triggered by ROM firmware in the SOC, which then chains a second stage bootloader and often concurrently a security enclave known as a TEE (trusted execution environment). The concept of the second stage bootloader will be familiar to one who has done ARM or similar embedded Linux work, usually this is where U-Boot fits, as often found on a consumer router for example. Android devices though, tend to use a bootloader derived from project called Little Kernel (https://github.com/littlekernel/lk). This performs the same role as U-Boot but in a manner more tailored for Android - note that Little Kernel is not Android specific, you could use it in any baremetal system effectively as an alternative to FreeRTOS as an example. But in our case, there will be a Little Kernel task typically called "aboot" which knows how to boot the BOOTIMG. Sometimes, the second stage bootloader might be identified in the partition list as UBOOT when it is actually a Little Lernel!
+At the start of the flash, there will often be a small first stage bootloader, or PRELOADER, which gets triggered by ROM firmware in the SOC, which then chains a second stage bootloader and often concurrently a security enclave known as a TEE (trusted execution environment). The concept of the second stage bootloader will be familiar to one who has done ARM or similar embedded Linux work, usually this is where U-Boot fits, as often found on a consumer router for example. Android devices though, tend to use a bootloader derived from project called Little Kernel [https://github.com/littlekernel/lk(). This performs the same role as U-Boot but in a manner more tailored for Android - note that Little Kernel is not Android specific, you could use it in any baremetal system effectively as an alternative to FreeRTOS as an example. But in our case, there will be a Little Kernel task typically called "aboot" which knows how to boot the BOOTIMG. Sometimes, the second stage bootloader might be identified in the partition list as UBOOT when it is actually a Little Lernel!
 
 Anyway, there is a chain from the SOC --> preloader --> Little Kernel --> Android Linux BOOTIMG --> Linux - the intent is to ensure integrity, using signature verification at each stage through to Linux.
 
@@ -35,7 +35,7 @@ As part of this process there is a communication path between Linux and the boot
 
 Usually, when you plug the embedded device into a computer via USB, it will just charge - but you might notice a glitch in the connect hosts `dmesg` output where it temporarily showed up as a USB device of some kind. This is because the device SOC dynamically controls the USB mode. This is needed for factory flashing of the device, and development and testing. The mode is called FASTBOOT which is part of the Android open standards. In fact, the `fastboot` tool can even be apt-getted in some Linux distributions, so you dont even need any special tooling to download a Linux image into the device once you get to the unlocked state.
 
-There is a much better description of the boot process here: https://source.android.com/docs/security/features/verifiedboot/boot-flow
+There is a much better description of the boot process here: [https://source.android.com/docs/security/features/verifiedboot/boot-flow]()
 
 
 # Repurposing, not pwning
@@ -57,7 +57,7 @@ There are several assumptions above. If they are not met, dealing with them is o
 - solving the above would require power glitching or other similar techniques - today assumes we don't have a lab beyond perhaps a soldering iron or an IC pin clip and a bus pirate or raspberry pico available to us
 - try as hard as we can we dont easily find a place to write our own code. This can become solvable by diving into reverse engineering actual binaries with Ghidra or Radare2 but that is also beyond the scope for this article
 
-An example of finding the serial port can be found at ({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %})
+An example of finding the serial port can be found [here]({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %})
 
 # Finding a shell and dumping firmware partitions
 
@@ -128,7 +128,7 @@ Plenty has been written about this.
 
 Generally, you can extract all the things from the BOOTIMG and the filesystems using `binwalk`. But there are cleaner tools, especially if you want to hack your own BOOTIMG to try and RAM boot it over fastboot.Plenty of hits will come up when you search github for 'BOOTIMG' and 'initramfs'
 
-UBI partitions are best unpacked using a tool like https://github.com/jrspruitt/ubi_reader
+UBI partitions are best unpacked using a tool like [https://github.com/jrspruitt/ubi_reader]()
 
 For the moment though, we just want to see if we are lucky and can run a small program to boot to fastboot mode.
 
