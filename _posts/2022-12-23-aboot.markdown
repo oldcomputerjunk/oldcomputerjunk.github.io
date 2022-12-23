@@ -48,7 +48,7 @@ Ideally we can follow the following process:
 - dump the flash, or dump the flash over SPI or using a Bus Pirate or similar if we can't guess the password or a shell
 - analyse the file system
 - find an opportunity to write a file somewhere that can run our own code, to reboot the device into fastboot mode
-- we can use a reboot syscall to drop it into fastboot mode. This sounds easy, and in hindsight it is, but before I did it the first time I first had to decompile a custom Little Kernel to work it out. I can imagine situations where that would still be required. Hopefully if you are reading this, it will work for you without having to reverse engineer a Little Kernel - having said that, reversing a bootloader will teach you quite a lot!
+- we can use a reboot syscall to drop it into fastboot mode. This sounds easy, and in hindsight it is, but before I did it the first time I first had to decompile a custom Little Kernel to work it out. I can imagine situations where that would still be required. Hopefully if you are reading this, it will work for you without having to reverse engineer a Little Kernel - having said that, reversing a bootloader will teach you quite a lot! Here, Ghidra is your friend - or radare2, for a slightly dated overview of using it see for example [https://www.youtube.com/watch?v=R3sGlzXfEkU]()
 
 There are several assumptions above. If they are not met, dealing with them is out of scope of this article, sorry!
 - we cant find the serial port
