@@ -1,0 +1,170 @@
+---
+layout: post
+slug: aboot
+title:  "Getting to orange mode in non-phone embedded android targets"
+date:   2022-12-23 00:00:00
+categories:
+- infosec
+- howto
+tags:
+- embedded
+- hacking
+- reversing
+- android
+---
+
+# Introduction
+
+The reader with an interest in this topic may have some familiar with Android, especially if they have rooted their phone or table or installed an alternative distro such as LineageOS.
+
+Did you know that the same Linux operating system, specifically kernel and base user space, can be found in embedded devices, such as smart speakers? We can leverage this when repurposing such devices; if lucky we can customise the existing firmware, or drop them into fastboot and upload our own Linux spin.
+
+Warning: this article serves as an overview, and omits lower detail about several tasks required along the way. But if you have some familiarity, it will provide some key hints that I had to work out for myself the first time.
+
+## Background and Boot Process
+
+There is a lot of online material describing how Android is built and deployed, courtesy of the Android Open Source project. This includes everything from the boot process through to the user space. Start at https://source.android.com although the more interesting bits can sometimes take some searching.
+
+In a very approximate overview a typical Android Linux has multiple storage partitions in the device flash, the most important of these includes the Linux kernel and initramfs, known as a BOOTIMG in Android terms, and one or more read-only partitions, perhaps mounted in /system and /vendor, and a writable partition in /data. There will typically be quite a bit of variety on top of that, and additionally there will be other paritions in the flash that are not Linux filesystems. Also, when I say writable, I mean from a mounted Linux filesystem sense - there will be layers of permissions on top of that so an arbitrary non-root Linux process can't just write anywhere...
+
+At the start of the flash, there will often be a small first stage bootloader, or PRELOADER, which gets triggered by ROM firmware in the SOC, which then chains a second stage bootloader and often concurrently a security enclave known as a TEE (trusted execution environment). The concept of the second stage bootloader will be familiar to one who has done ARM or similar embedded Linux work, usually this is where U-Boot fits, as often found on a consumer router for example. Android devices though, tend to use a bootloader derived from project called Little Kernel (https://github.com/littlekernel/lk). This performs the same role as U-Boot but in a manner more tailored for Android - note that Little Kernel is not Android specific, you could use it in any baremetal system effectively as an alternative to FreeRTOS as an example. But in our case, there will be a Little Kernel task typically called "aboot" which knows how to boot the BOOTIMG. Sometimes, the second stage bootloader might be identified in the partition list as UBOOT when it is actually a Little Lernel!
+
+Anyway, there is a chain from the SOC --> preloader --> Little Kernel --> Android Linux BOOTIMG --> Linux - the intent is to ensure integrity, using signature verification at each stage through to Linux.
+
+As part of this process there is a communication path between Linux and the bootloader, via a non-filesystem based flash mechanism sometimes called MISC or NVRAM, and/or a device known as a PMIC, or Power Management IC. One of the PMIC functions is roughly analogous to what used to be called the CMOS memory in PCs, or NVRAM or battery backed RAM. This is required to aide in remote firmware upgrades, as well as to inform the system whether the battery went flat, etc. For example, Linux will write the boot reason, and the Little Kernel will read it on next reboot. Additionally, Linux may set a bit in the PMIC, for example, to toggle fastboot mode, we can use this to our advantage in due course.
+
+Usually, when you plug the embedded device into a computer via USB, it will just charge - but you might notice a glitch in the connect hosts `dmesg` output where it temporarily showed up as a USB device of some kind. This is because the device SOC dynamically controls the USB mode. This is needed for factory flashing of the device, and development and testing. The mode is called FASTBOOT which is part of the Android open standards. In fact, the `fastboot` tool can even be apt-getted in some Linux distributions, so you dont even need any special tooling to download a Linux image into the device once you get to the unlocked state.
+
+There is a much better description of the boot process here: https://source.android.com/docs/security/features/verifiedboot/boot-flow
+
+
+# Repurposing, not pwning
+
+Our objective today is to find a way to bypass the boot chain security to unlock the bootloader and run our own image, and first of all, get at the firmware so we can analyse it. It may turn out that a security vulnerability ends up being required to get to where we need to go, but in my experience, which admittedly is limited to a subset of the market because I usually get to do this with cheap no-brand equipment from quirky supermarkets and certain Australia-wide electronics retailers, getting to the system via the serial port and/or dumping the flash over SPI is often sufficient to find a mechanism that is not worthy of a CVE.
+
+Ideally we can follow the following process:
+- find the serial port and a console shell
+- guess the password if it has one
+- dump the flash, or dump the flash over SPI or using a Bus Pirate or similar if we can't guess the password or a shell
+- analyse the file system
+- find an opportunity to write a file somewhere that can run our own code, to reboot the device into fastboot mode
+- we can use a reboot syscall to drop it into fastboot mode. This sounds easy, and in hindsight it is, but before I did it the first time I first had to decompile a custom Little Kernel to work it out. I can imagine situations where that would still be required. Hopefully if you are reading this, it will work for you without having to reverse engineer a Little Kernel - having said that, reversing a bootloader will teach you quite a lot!
+
+There are several assumptions above. If they are not met, dealing with them is out of scope of this article, sorry!
+- we cant find the serial port
+- we cant get to a point of dumping the flash
+- the flash is encrypted
+- solving the above would require power glitching or other similar techniques - today assumes we don't have a lab beyond perhaps a soldering iron or an IC pin clip and a bus pirate or raspberry pico available to us
+- try as hard as we can we dont easily find a place to write our own code. This can become solvable by diving into reverse engineering actual binaries with Ghidra or Radare2 but that is also beyond the scope for this article
+
+An example of finding the serial port can be found at ({{ site.baseurl }}{% link _posts/2022-11-12-cheap-smart-speaker-teardown-part3.markdown %})
+
+# Finding a shell and dumping firmware partitions
+
+First - keep a journal while doing this. A text file in a text editor is fine, or I use a program called Joplin. Regularly copy/paste absolutely everything you do or try or see! You will thank youself later, trust me!
+
+If you found a serial port and a shell with no password prompt, great!
+
+Otherwise, maybe you can guess the password. It won't take much googling to find common ones people have worked out for many classes of embedded devices, such as popular cheap chinese IP cameras. Go ahead, try it!
+
+Sometimes, you can get a shell but not as root. I had an IP camera like this. At least at that stage, you can try and dump the flash as non-root user, which is usually still possible. You might even be able to use rainbow tables to find the root password then.
+
+Without the shell, you are left to try dumping the flash via hardware means. We won't look at that today.
+
+Once you have a shell, the flash can be directly accessed usually as a series of Linux device files like `/dev/mtd0` or similar. There should be one for each partition. Note that sometimes additional work might be required to make them readable, but we won't consider that here.
+
+The general approach is as follows:
+- try and get a network connection out of the device. I will assume you can do this yourself, or work out how...
+- try and find a program on the device you can use to transfer files
+- failing that, at worst case you can cat files to the shell while making sure your terminal program is logging, and write a tool to reconstruct it from the log
+
+Get creative if needed. For example, many devices leave off common programs such as an ssh client, but look for dropbear, if that got left in, make a symlink in `/tmp` from `/tmp/ssh` to the dropbear program. Run `busybox` or `toybox` (prevalent in Android) and see if it has any subcommands you can use. Google how to use `openssl`  to send files off the device. And if it has bash (it often will) google how to redirect to a port and use netcat on the other side.
+
+If you can't establish network, dumping to the serial console is the only choice left. Ideally, you will have `xxd` or `od` or something similar, so that you can log hex to the terminal program log and not have to worry about translating binary.
+
+Example of dumping a partition using `xxd`:
+- first, this assumes you are using `picocom` to connect to the serial port and you have logging enabled!
+- then, just dump from the serial shell:
+  ```
+  xxd /dev/mtd3 
+  ```
+- finally, open up the log in Visual Studio code, and strip all the stuff each side of the xxd output, save this, then run it through `xxd -r > mdt3.bin` 
+
+Warning: some of the partitions will map to mounted partitions in the Linux user space. If any of those are writable (such as `/data`) you will need to remount them as readonly - otherwise they will not unpack properly - UBI partitions are particularly prone to this.
+
+The next step is working out what each partition is. If you were capturing the terminal program log, go look at it for the output from the Little Kernel boot loader, or also Linux itself. With luck there will be something like this tweaked example:
+
+```
+[PART] [0x0000000000000000-0x00000000000FFFFF] "PRELOADER" (512 blocks) 
+<snipped>
+[PART] [0x0000000000600000-0x00000000007FFFFF] "UBOOT" (1024 blocks) 
+[PART] [0x0000000000800000-0x00000000013FFFFF] "BOOTIMG" (6144 blocks) 
+[PART] [0x0000000001400000-0x00000000019FFFFF] "RECOVERY" (6144 blocks) 
+<snipped>
+[PART] [0x000000000BD00000-0x0000000012AFFFFF] "ANDROID" (56320 blocks) 
+[PART] [0x0000000012B00000-0x000000001E5BFFFF] "USRDATA" (95616 blocks) 
+blocks) 
+```
+
+This dump shows the address of the partition in flash, and an identifier for it. Note in this example, UBOOT (which is actually Little Kernel), BOOTIMG, RECOVERY (which is also a BOOTIMG, used for factory reset), MISC, ANDROID (which mounts as `/system`) and USRDATA (which mounts as writable `/data`)
+
+Important to note, that the order of these corresponds to the number in `/dev/mtdX` - above, `/dev/mtd0` is PRELOADER, and so on.
+
+# Aside - UBI filesystems
+
+Typically when working with a router, the filesystems are squashfs and writable files are written to `tmpfs` in RAM; persistence is achieved using an NVRAM partition. Sometimes a system is derived from OpenWRT which has an additional writable data filesystem.
+
+In our Android-based case, both the read only and writable partitions are often UBI partitions. This may aide the Android over the air (OTA) firmware upgrade process: for example, `/system` gets reflashed and `/data` wiped and then refresh from base file in system on a factory reset.
+
+This can mean if we are lucky, you can make changes by simply remounting `/system` writable: `mount -o remount,rw /system`
+
+Beyond that, we need to find a way to write to `/data` in a way that some unintended feature of the system will execute it. 
+
+For now though, our ultimate objective is to get to fastboot mode and boot a ram kernel over USB, so we can just as easily use /tmp
+
+# Analysing firmware partitions and saving a binary to run
+
+Plenty has been written about this.
+
+Generally, you can extract all the things from the BOOTIMG and the filesystems using `binwalk`. But there are cleaner tools, especially if you want to hack your own BOOTIMG to try and RAM boot it over fastboot.Plenty of hits will come up when you search github for 'BOOTIMG' and 'initramfs'
+
+UBI partitions are best unpacked using a tool like https://github.com/jrspruitt/ubi_reader
+
+For the moment though, we just want to see if we are lucky and can run a small program to boot to fastboot mode.
+
+Usually on Linux when you run `reboot` it calls the `SYS_reboot` system call. It turns out there are arguments to the syscall that let you specify a boot reason. How this reason is interpreted is system specific. But it turns out that (on, for example, Media tek based android embedded devices and phones) there is a Linux kernel device that hooks this and sets a bit in the PMIC to force the device into Fastboot.
+
+The following short C program will do this for us:
+```
+#include <stdio.h>
+#include <linux/reboot.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[]) {
+	printf("Try bootloader via wdk module reboot");
+	syscall(SYS_reboot, LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2C, LINUX_REBOOT_CMD_RESTART2, "bootloader");
+}
+```
+
+If you are really lucky, and your device is an arm7hf-based system, you can just compile this directly on a Raspberry Pi 400:
+```
+gcc -static bootme2fastboot.c -o bootme2fastboot
+```
+
+Using static is vitally important, because often the C Library DLLs can mismatch.
+
+Then you just copy this to the target and run it. (Easier said than done of course; you might need to try the xxd trick in reverse if all else fails...)
+
+With luck, you will see the system stall during the Little Kernel log before Linux starts. At this stage, you can run `fastboot` and communicate with the system over USB. I'd suggest reading its manual first!
+
+# Triggering orange mode
+
+Sadly, you probably wont be able to download and run any image yet.
+Generally the system will complain about security, such as the device is not allowed to boot other firmware, ie. it is locked.
+
+Luckily, almost every Android device including non-phones usually have a way where if you hold down a button during boot, it can trigger what I call 'orange' mode, which is where it will reboot, do a factory reset, then set some data in one of the MISC partitions where it is now in unlocked mode - I call it orange because that is actually a code from the Android source (see the article I linked earlier) - so that when you then (again) boot to fastboot mode, you are now allowed to try and load your own firmware!
+
+The trick is to experiment. For example, on a smart speaker, keep rebooting, and holding a different button down. Of course being embedded, there is no screen, and no feedback, other than what you get on the serial terminal.
+
+To test that this is effective, always start by trying to load the dumped BOOTIMG over fastboot to confirm the process. If this works, you are on the road to modding it to suit your own application!
