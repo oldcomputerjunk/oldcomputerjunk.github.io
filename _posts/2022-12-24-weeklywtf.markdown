@@ -22,7 +22,7 @@ Anyway, if you discovered you pasted this there are a couple of methods to deal 
 
 ## Discovery
 
-Try running your script through either `xxd` or `od` on Linux / MacOS (or wsl)
+Try running your script through either `xxd` or `od` on Linux / MacOS (or WSL)
 
 Sample output from `od -Ax -tx1z < somefile.txt` 
 ```
@@ -42,9 +42,9 @@ Via `xxd somefile.txt` instead:
 
 Note after each line end (`0x0a`) there is the two hex bytes `0xc2` and `0xa0`
 
-Technically, this is UTF-8 for a 'non breaking space', same as HTML entity `&nbsp;` you can read about it at https://www.fileformat.info/info/unicode/char/00a0/index.htm
+Technically, this is UTF-8 for a 'non breaking space', same as HTML entity `&nbsp;` you can read about it at [https://www.fileformat.info/info/unicode/char/00a0/index.htm]()
 
-WHen the original text was pasted into vim it doesnt show anything for these bytes by default, even though vim usually shows other control characters like CTRL+X as `^X`
+When the original text was pasted into vim it doesnt show anything for these bytes by default, even though vim usually shows other control characters like CTRL+X as `^X`
 
 The resulting file doesn't show anything when output via `cat` either.
 
@@ -57,28 +57,28 @@ We can run sed over it and with some bash trickery get it to replace the dodgy b
 sed -i -e 's/'$(echo -e '\xc2\xa0')'/  /g' somefile.txt
 ```
 
-Here, `-i` means in place edit the input file, `somefile.txt`, and our search expression is build by using the ability of Linux/bash echo to output arbitrary binary bytes.
+Here, `-i` means in place edit the input file, and our search expression is built using the ability of Linux/bash echo to output arbitrary binary bytes.
 
-Note we replace them with two white spaces (or maybe something else, depending on what you copied) or the end result will not have the expected indentation.
+Note we replace them with two spaces (or you might want to use something else, depending on what you copied) or the end result will not have the expected indentation.
 
 ## Method 2 - show the things in vim itself
 
-Change the current encoding from the default (likely utf8) to Latin 1:
+Change the current encoding from the default (likely UTF-8) to Latin:
 press `ESC` then `:set encoding=latin1`
 
 And like magic:
 
-![Vim in Windows terminal showing diamonds for unprintable UTF characters](/images/magical-diamonds-1.png){:height="100%" width="100%"}
+![Vim in Windows terminal showing diamonds for unprintable UTF characters](/images/magical-diamonds-1.png){:height="50%" width="50%"}
 
-Now you can manually delete them, or maybe even find a way to use search and replace. 
+Now you can manually delete the characters, or maybe even find a way to use search and replace. 
 
 # Why does this happen
 
-Lots of blog rendering frameworks include modes for syntax highlighted formatting with line numbers and the like. Some of these simply apply CSS over a `<pre>` block for example.
+Lots of blog rendering frameworks include modes for syntax highlighted formatting with line numbers and the like. Some of these simply apply CSS over a `<pre>` block, for example.
 
 Others get a bit fancier however.
 
-If you find an example, it can be illustative to hit CTRL+SHIFT+I in your web browser and take a look at what you just copied. It might look like this, full of `DIV` and `TD` element:
+If you come across this problem and know where you copied from, it can be illustative to hit CTRL+SHIFT+I in your web browser and take a look at what you just copied. It might look like the following, full of `DIV` and `TD` elements:
 ```
 <table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td>
 <td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">.global _Reset</code></div><div class="line number2 index1 alt1"><code class="plain plain">_Reset:</code></div>
@@ -100,8 +100,8 @@ Try using: `ESC` then `:set list`, this also has an argument that lets you custo
 
 # Lastly, don't get pwned
 
-Check out this video from Defcon 30 earlier this year, showing how Emoji can be used for shell code... https://www.youtube.com/watch?v=E8puAkalMRQ
+Check out this video from Defcon 30 earlier this year, showing how Emoji can be used for shell code...[https://www.youtube.com/watch?v=E8puAkalMRQ]()
 
-And then there are the hidden paste attacks: http://lifepluslinux.blogspot.com/2017/01/look-before-you-paste-from-website-to.html
+And then there are the hidden paste attacks: [http://lifepluslinux.blogspot.com/2017/01/look-before-you-paste-from-website-to.html]()
 
 Be careful out there! 👾 👽 💩
