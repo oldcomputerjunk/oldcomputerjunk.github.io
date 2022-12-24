@@ -16,7 +16,7 @@ Ever copy/pasted a shell script code fragment from a web page into vi/vim or ano
 
 When this happens, I'm getting quicker at running the affected file through `xxd` and discovering unexpected binary bytes in my file, these are in fact invisible UTF-8 characters. I mean, I know there is a whole pile of fun to be had with these incorrigible byte order marks and what not, I've sat through various talks at conferences that I realise they do have a valuable accessibility benefit, and they let us have those all important emoji, but seriously, when going the other way 99.999% of the time anyone copying selected text from a web browser wants the actual text, not some invisible scrambled egg of binary soup!
 
-Anyway, if you discovered you pasted this stuff you can fix it few ways
+Anyway, if you discovered you pasted this there are a couple of methods to deal with it...
 
 (I'll use vi and vim interchangeably below although it is highly likely that some stuff only works in vim not the minimal vi)
 
