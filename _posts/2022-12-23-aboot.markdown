@@ -23,24 +23,24 @@ Warning: this article serves as an overview, and omits lower detail about severa
 
 ## Background and Boot Process
 
-There is a lot of online material describing how Android is built and deployed, courtesy of the Android Open Source project. This includes everything from the boot process through to the user space. Start at [https://source.android.com]() although the more interesting bits can sometimes take some searching.
+There is a lot of online material describing how Android is built and deployed, courtesy of the Android Open Source project. This includes everything from the boot process through to the user space. Start at [https://source.android.com]() although the more interesting bits can sometimes take some searching as they are scattered across various other sites.
 
-In a very approximate overview a typical Android Linux has multiple storage partitions in the device flash, the most important of these includes the Linux kernel and initramfs, known as a BOOTIMG in Android terms, and one or more read-only partitions, perhaps mounted in /system and /vendor, and a writable partition in /data. There will typically be quite a bit of variety on top of that, and additionally there will be other paritions in the flash that are not Linux filesystems. Also, when I say writable, I mean from a mounted Linux filesystem sense - there will be layers of permissions on top of that so an arbitrary non-root Linux process can't just write anywhere...
+In a very approximate overview a typical Android Linux has multiple storage partitions in the device flash, the most important of these includes the Linux kernel and initramfs, combined in a form known as a **BOOTIMG**, and one or more read-only partitions, perhaps mounted in /system and /vendor, and a writable partition in /data. There will typically be quite a bit of variation between devices, and additionally there will be other paritions in the flash that are not Linux filesystems. Also, when I say writable, I mean from a mounted Linux filesystem sense - there will be layers of permissions on top of that so an arbitrary non-root Linux process can't just write anywhere...
 
-At the start of the flash, there will often be a small first stage bootloader, or PRELOADER, which gets triggered by ROM firmware in the SOC, which then chains a second stage bootloader and often concurrently a security enclave known as a TEE (trusted execution environment). The concept of the second stage bootloader will be familiar to one who has done ARM or similar embedded Linux work, usually this is where U-Boot fits, as often found on a consumer router for example. Android devices though, tend to use a bootloader derived from project called Little Kernel [https://github.com/littlekernel/lk(). This performs the same role as U-Boot but in a manner more tailored for Android - note that Little Kernel is not Android specific, you could use it in any baremetal system effectively as an alternative to FreeRTOS as an example. But in our case, there will be a Little Kernel task typically called "aboot" which knows how to boot the BOOTIMG. Sometimes, the second stage bootloader might be identified in the partition list as UBOOT when it is actually a Little Lernel!
+At the start of the flash, there will often be a small first stage bootloader, or **PRELOADER**, which is loaded by ROM firmware in the SOC, which then chains a second stage bootloader and often concurrently a security enclave known as a **TEE** (trusted execution environment). The concept of the second stage bootloader will be familiar to one who has done ARM or similar embedded Linux work, usually this is where U-Boot fits, for example as often found on a consumer router. Android devices though, tend to use a bootloader derived from project called Little Kernel [https://github.com/littlekernel/lk](). This performs the same role as U-Boot but in a manner more tailored for Android - note that Little Kernel is not Android specific, you could use it in any baremetal system effectively as an alternative to FreeRTOS as an example. But in our case, there will be a Little Kernel task typically called "aboot" which knows how to boot the BOOTIMG. Sometimes, the second stage bootloader might be identified in the partition list as U-BOOT when it is actually a Little Lernel!
 
 Anyway, there is a chain from the SOC --> preloader --> Little Kernel --> Android Linux BOOTIMG --> Linux - the intent is to ensure integrity, using signature verification at each stage through to Linux.
 
-As part of this process there is a communication path between Linux and the bootloader, via a non-filesystem based flash mechanism sometimes called MISC or NVRAM, and/or a device known as a PMIC, or Power Management IC. One of the PMIC functions is roughly analogous to what used to be called the CMOS memory in PCs, or NVRAM or battery backed RAM. This is required to aide in remote firmware upgrades, as well as to inform the system whether the battery went flat, etc. For example, Linux will write the boot reason, and the Little Kernel will read it on next reboot. Additionally, Linux may set a bit in the PMIC, for example, to toggle fastboot mode, we can use this to our advantage in due course.
+As part of this process there is a communication path between Linux and the bootloader, via a non-filesystem based flash mechanism using a partition perhaps called MISC or NVRAM, and/or registers in device such as a PMIC, or Power Management IC, and/or RTC (a Realtime Clock chip). The function is roughly analogous to what used to be called the CMOS memory in PCs, or NVRAM or battery backed RAM. This is required to aide in remote firmware upgrades, as well as to inform the system whether the battery went flat, etc. For example, Linux will write the boot reason, and the Little Kernel will read it on next reboot. Additionally, Linux may set a bit in a PMIC register, for example, to toggle fastboot mode, we can use this to our advantage in due course. The same system may also include a watchdog, which can detect if Linux has stopped or panicked and force a reset.
 
-Usually, when you plug the embedded device into a computer via USB, it will just charge - but you might notice a glitch in the connect hosts `dmesg` output where it temporarily showed up as a USB device of some kind. This is because the device SOC dynamically controls the USB mode. This is needed for factory flashing of the device, and development and testing. The mode is called FASTBOOT which is part of the Android open standards. In fact, the `fastboot` tool can even be apt-getted in some Linux distributions, so you dont even need any special tooling to download a Linux image into the device once you get to the unlocked state.
+Usually, when you plug the embedded device into a computer via USB, it will just charge - but you might notice a glitch in the connect hosts `dmesg` output where it temporarily showed up as a USB device of some kind. This is because the device SOC dynamically controls the USB mode. This is needed for factory flashing of the device, and development and testing. The mode is called **FASTBOOT** which is part of the Android standards. In fact, the `fastboot` tool can even be apt-get'ted in some Linux distributions, so you dont even need any special tooling to download a Linux image into the device once you get to the unlocked state.
 
 There is a much better description of the boot process here: [https://source.android.com/docs/security/features/verifiedboot/boot-flow]()
 
 
 # Repurposing, not pwning
 
-Our objective today is to find a way to bypass the boot chain security to unlock the bootloader and run our own image, and first of all, get at the firmware so we can analyse it. It may turn out that a security vulnerability ends up being required to get to where we need to go, but in my experience, which admittedly is limited to a subset of the market because I usually get to do this with cheap no-brand equipment from quirky supermarkets and certain Australia-wide electronics retailers, getting to the system via the serial port and/or dumping the flash over SPI is often sufficient to find a mechanism that is not worthy of a CVE.
+Our objective today is to find a way to bypass the boot chain security to unlock the bootloader and run our own image, prior to that, get at the firmware so we can analyse it. It may turn out that a security vulnerability ends up being required to get to where we need to go, but in my experience, which admittedly is limited to a subset of the market because I usually get to do this with cheap no-brand equipment from quirky supermarkets and certain Australia-wide electronics retailers, getting to the system via the serial port and/or dumping the flash over SPI is often sufficient to find a mechanism that is not worthy of a CVE.
 
 Ideally we can follow the following process:
 - find the serial port and a console shell
@@ -48,9 +48,9 @@ Ideally we can follow the following process:
 - dump the flash, or dump the flash over SPI or using a Bus Pirate or similar if we can't guess the password or a shell
 - analyse the file system
 - find an opportunity to write a file somewhere that can run our own code, to reboot the device into fastboot mode
-- we can use a reboot syscall to drop it into fastboot mode. This sounds easy, and in hindsight it is, but before I did it the first time I first had to decompile a custom Little Kernel to work it out. I can imagine situations where that would still be required. Hopefully if you are reading this, it will work for you without having to reverse engineer a Little Kernel - having said that, reversing a bootloader will teach you quite a lot! Here, Ghidra is your friend - or radare2, for a slightly dated overview of using it see for example [https://www.youtube.com/watch?v=R3sGlzXfEkU]()
+- we can use a reboot syscall to drop it into fastboot mode. This sounds easy, and in hindsight it is, but before I did it the first time I first had to decompile a custom Little Kernel to work it out. I can imagine situations where that would still be required. Hopefully if you are reading this, it will work for you without having to reverse engineer a Little Kernel - having said that, reversing a bootloader will teach you quite a lot! Here, Ghidra is your friend - or radare2, for a slightly dated overview of using the latter see for example [https://www.youtube.com/watch?v=R3sGlzXfEkU]()
 
-There are several assumptions above. If they are not met, dealing with them is out of scope of this article, sorry!
+There are several assumptions above (if they are not met, dealing with them is out of scope of this article, sorry!):
 - we cant find the serial port
 - we cant get to a point of dumping the flash
 - the flash is encrypted
@@ -61,7 +61,7 @@ An example of finding the serial port can be found [here]({{ site.baseurl }}{% l
 
 # Finding a shell and dumping firmware partitions
 
-First - keep a journal while doing this. A text file in a text editor is fine, or I use a program called Joplin. Regularly copy/paste absolutely everything you do or try or see! You will thank youself later, trust me!
+I recommend keeping a journal while doing this. A text file in a text editor is fine, or I use a program called Joplin. Regularly copy/paste absolutely everything you do or try or see! You will thank youself later, trust me!
 
 If you found a serial port and a shell with no password prompt, great!
 
@@ -132,7 +132,7 @@ UBI partitions are best unpacked using a tool like [https://github.com/jrspruitt
 
 For the moment though, we just want to see if we are lucky and can run a small program to boot to fastboot mode.
 
-Usually on Linux when you run `reboot` it calls the `SYS_reboot` system call. It turns out there are arguments to the syscall that let you specify a boot reason. How this reason is interpreted is system specific. But it turns out that (on, for example, Media tek based android embedded devices and phones) there is a Linux kernel device that hooks this and sets a bit in the PMIC to force the device into Fastboot.
+Usually on Linux when you run `reboot` it calls the `SYS_reboot` system call. Less well known is that the reboot syscall lets you specify a boot reason; drivers can hook the reboot process and use this string as they see fit. How this reason is interpreted is system specific. But it turns out that (on, for example, Mediatek based android embedded devices and phones) there is a Linux kernel device that hooks this and sets a bit in a register to force the device to enter fastboot when the Little Kernel starts next.
 
 The following short C program will do this for us:
 ```
@@ -147,14 +147,14 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-If you are really lucky, and your device is an arm7hf-based system, you can just compile this directly on a Raspberry Pi 400:
+If you are really lucky, and your device is happens to be able to run arm7hf binaries, you can just compile this directly on a Raspberry Pi 400:
 ```
 gcc -static bootme2fastboot.c -o bootme2fastboot
 ```
 
 Using static is vitally important, because often the C Library DLLs can mismatch.
 
-Then you just copy this to the target and run it. (Easier said than done of course; you might need to try the xxd trick in reverse if all else fails...)
+Then you copy this to the target and run it. (Easier said than done of course; you might need to try the xxd trick in reverse if all else fails...)
 
 With luck, you will see the system stall during the Little Kernel log before Linux starts. At this stage, you can run `fastboot` and communicate with the system over USB. I'd suggest reading its manual first!
 
@@ -167,4 +167,4 @@ Luckily, almost every Android device including non-phones usually have a way whe
 
 The trick is to experiment. For example, on a smart speaker, keep rebooting, and holding a different button down. Of course being embedded, there is no screen, and no feedback, other than what you get on the serial terminal.
 
-To test that this is effective, always start by trying to load the dumped BOOTIMG over fastboot to confirm the process. If this works, you are on the road to modding it to suit your own application!
+To test that this is effective, always start by trying to load a kernel and initrd over fastboot to confirm the process (not part of this article.) If this works, you are on the road to modding it to suit your own application!
