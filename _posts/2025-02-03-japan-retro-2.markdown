@@ -1,6 +1,6 @@
 ---
 layout: post
-slug: japan-jan-2025-retro-1
+slug: japan-jan-2025-retro-2
 title:  "January 2025 Japan Trip - Retro report post #2"
 date:   2025-02-03 00:00:00
 categories:
@@ -58,7 +58,7 @@ They sell some “retro” but surely not that collectible software for high-ish
 ![old software](/images/japan2/9.png)
 ![old software 2](/images/japan2/10.png)
 
-One oddity is some of the second hand gear that was unusual but common, A5-sized USB port scanners, amongst others. And DVD / Blue Ray burners & readers are even still very common on the shelf new.
+One oddity is some of the second hand gear that was unusual to me but common, A5-sized USB port scanners, amongst others. And DVD / Blue Ray burners & readers are even still very common on the shelf new.
 
 I do regret not spending 6000 yen and getting a demonstrated working Japanese branded laptop that was running Windows 7, but by that stage I couldn’t go back and find the store they were in.
 
