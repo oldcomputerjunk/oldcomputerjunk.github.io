@@ -23,7 +23,7 @@ Afterwards, whilst walking in a shopping area, completely by accident I came acr
 ![Vintage and Retoro Museum Cafe & Bar GO/2F](/images/japan1/1.png)
 
 Aside: 2F means second floor, which is the "first floor in Australia - the ground floor in Japan is referred to as 1F.
-￼
+
 In addition to computer game consoles, they had working 50's-80’s style vending machines for drinks, music, etc.
 
 ![Retro vending machines](/images/japan1/2.png)
