@@ -1,7 +1,7 @@
 ---
 layout: post
 slug: japan-jan-2025-retro-1
-title:  "January 2025 Japan Trip Retro report post #1"
+title:  "January 2025 Japan Trip - Retro report post #1"
 date:   2025-01-30 00:00:00
 categories:
 - realworld
