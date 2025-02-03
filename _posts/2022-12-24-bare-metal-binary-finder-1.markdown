@@ -1,7 +1,7 @@
 ---
 layout: post
 slug: bare-metal-binary-finder-1
-title:  "Prospecting for bar metal libc functions"
+title:  "Prospecting for bare metal libc functions"
 date:   2023-01-31 00:00:00
 categories:
 - howto
